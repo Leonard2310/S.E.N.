@@ -204,7 +204,6 @@ BEGIN
     CLOSE r_set; 
     DELETE FROM RICHIESTE WHERE R.IdPaziente=:old.ld;
 END;
-
 */
 
 -- Revocazione dei privilegi
