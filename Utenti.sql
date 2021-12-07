@@ -84,17 +84,29 @@ CREATE TABLE COINVOLGIMENTI(
     CONSTRAINT PK_COINVOLGIMENTI PRIMARY KEY(IDDip, CodSegnalazione)
 );
 
+
 -- Definizione dei ruoli
 -- Ruolo utente
-CREATE ROLE utente;
-    GRANT CONNECT TO utente;
-    GRANT INSERT ON sen.RICHIESTE TO utente;
+CREATE ROLE utente;                                   -- creazione del ruolo
+GRANT CONNECT TO utente;                              -- attribuzione dei privilegi
+GRANT INSERT ON sen.RICHIESTE TO utente;              -- attribuzione dei privilegi
+GRANT INSERT, UPDATE, DELETE ON sen.UTENTI TO utente; -- attribuzione dei privilegi
 -- Dopo ogni singolo GRANT, apparirà nell'output screen "Grant riuscito/a."
-    
--- Ruolo operatore    
-CREATE ROLE operatore;
-    GRANT CONNECT TO operatore;
-    GRANT SELECT, INSERT, DELETE, UPDATE ON sen.SEGNALAZIONI TO operatore;
+
+-- Ruolo amm_dipartimento
+CREATE ROLE amm_dipartimento;
+GRANT CONNECT TO amm_dipartimento;
+GRANT INSERT, UPDATE, DELETE ON sen.DIPARTIMENTI   TO amm_dipartimento;
+GRANT INSERT, UPDATE, DELETE ON sen.OPERATORI      TO amm_dipartimento;
+GRANT INSERT, UPDATE, DELETE ON sen.TITOLIDISTUDI  TO amm_dipartimento;
+
+-- Ruolo centralinista    
+CREATE ROLE centralinista;
+GRANT CONNECT TO centralinista;
+GRANT SELECT                 ON sen.SEGNALAZIONI   TO centralinista;
+GRANT SELECT                 ON sen.RICHIESTE      TO centralinista;
+GRANT INSERT, UPDATE, DELETE ON sen.COINVOLGIMENTI TO centralinista;
+
 
 -- Creazione delle sequenze
 /* Si creano le seguenti sequenze:
@@ -165,6 +177,46 @@ ALTER TABLE COINVOLGIMENTI
     REFERENCES SEGNALAZIONI(Codice);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
     
+-- TRIGGER
+CREATE OR REPLACE TRIGGER CONSERVA_SEGNALAZIONI
+    AFTER DELETE ON UTENTI
+    FOR EACH ROW
+    DECLARE 
+        rNumeroDiTelefono UTENTI.NumeroDiTelefono%TYPE
+        rNome UTENTI.Nome%TYPE; 
+        rCognome UTENTI.Cognome%TYPE; 
+    
+        rCodice SEGNALAZIONI.Codice%TYPE; 
+        rTipologiaEmergenza SEGNALAZIONI.TipologiaEmergenza%TYPE; 
+    
+        rVia RICHIESTE.Via%TYPE;
+        rNumeroCivico RICHIESTE.NumeroCivico%TYPE;
+        rCittà RICHIESTE.Città%TYPE;
+        rProvincia RICHIESTE.Provincia%TYPE; 
+        rCAP RICHIESTE.CAP%TYPE; 
+        rTStamp RICHIESTE.TStamp%TYPE;
+    
+        cursor r_set IS SELECT 	U.NumeroDiTelefono, U.Nome, U.Cognome,
+                                S.Codice, S.TipologiaEmergenze,
+                                R.Via, R.NumeroCivico, R.Città, R.Provincia, R.CAP, R.TStamp
+        FROM UTENTI U,  SEGNALAZIONI S, RICHIESTE R
+        WHERE 	R.NumTelefonicoUtente=U.NumeroDiTelefono AND
+                R.NumTelefonicoUtente=:old.NumeroDiTelefono AND 	
+                S.Codice=R.CodiceEmergenza; 
+    BEGIN 
+        OPEN r_set; 
+        LOOP 
+            FECTH r_set INTO    rNumeroDiTelefono, rNome, rCognome,
+                                rCodice, rTipologiaEmergenza,
+                                rVia, rNumeroCivico, rCittà, rProvincia, rCAP, rTStamp;
+            INSERT INTO STORICO_SEGNALAZIONI
+            VALUES( rNumeroDiTelefono, rNome, rCognome, rCodice, rTipologiaEmergenza, rVia, rNumeroCivico, rCittà, rProvincia, rCAP, rTStamp); 
+        END LOOP; 
+        CLOSE r_set; 
+        DELETE FROM RICHIESTE WHERE R.IdPaziente=:old.ld; -- TODO
+    END;
+
+
 
 -- Eliminazione delle sequenze
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Sequence <nome_sequence> eliminato."
@@ -172,15 +224,24 @@ DROP SEQUENCE codSeg_seq;
 DROP SEQUENCE idDip_seq;
 DROP SEQUENCE idOpe_seq;
 
+
 -- Revocazione dei privilegi
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Revoke riuscito/a."
-REVOKE INSERT ON sen.RICHIESTE FROM utente;
-REVOKE SELECT, INSERT, DELETE, UPDATE ON sen.SEGNALAZIONI FROM operatore;
+REVOKE INSERT                 ON sen.RICHIESTE      FROM utente;
+REVOKE INSERT, UPDATE, DELETE ON sen.DIPARTIMENTI   FROM amm_dipartimento;
+REVOKE INSERT, UPDATE, DELETE ON sen.OPERATORI      FROM amm_dipartimento;
+REVOKE SELECT                 ON sen.SEGNALAZIONI   FROM centralinista;
+REVOKE SELECT                 ON sen.RICHIESTE      FROM centralinista;
+REVOKE INSERT, UPDATE, DELETE ON sen.UTENTI         FROM utente;
+REVOKE INSERT, UPDATE, DELETE ON sen.COINVOLGIMENTI FROM centralinista;
+REVOKE INSERT, UPDATE, DELETE ON sen.TITOLIDISTUDI  FROM amm_dipartimento;
 
 -- Rimozione dei ruoli
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Role <nome_role> eliminato."
 DROP ROLE utente;
-DROP ROLE operatore;
+DROP ROLE amm_dipartimento;
+DROP ROLE centralinista;
+
 
 -- Eliminazione delle tabelle
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_tabella> eliminato."
