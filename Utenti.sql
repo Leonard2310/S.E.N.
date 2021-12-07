@@ -164,9 +164,9 @@ ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_SEG FOREIGN KEY (CodSegnalazione)
     REFERENCES SEGNALAZIONI(Codice);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazione.
-    
---
 
+-- TODO    
+/*
 CREATE OR REPLACE TRIGGER CONSERVA_SEGNALAZIONI
 AFTER DELETE ON UTENTI
 FOR EACH ROW
@@ -202,9 +202,10 @@ BEGIN
         VALUES( rNumeroDiTelefono, rNome, rCognome, rCodice, rTipologiaEmergenza, rVia, rNumeroCivico, rCittà, rProvincia, rCAP, rTStamp); 
     END LOOP; 
     CLOSE r_set; 
-    DELETE FROM RICHIESTE WHERE R.IdPaziente=:old.ld; // TODO
+    DELETE FROM RICHIESTE WHERE R.IdPaziente=:old.ld;
 END;
 
+*/
 
 -- Revocazione dei privilegi
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Revoke riuscito/a."
