@@ -69,9 +69,7 @@ CREATE TABLE RICHIESTE(
     CAP NUMBER(5),
     Via VARCHAR2(35) NOT NULL,
     NumeroCivico NUMBER(5),
-    --Data DATE,
-    --Ora TIME, --hh:mm:ss
-    TStamp TIMESTAMP(0) NOT NULL,       
+    Data_Ora TIMESTAMP(0) NOT NULL,       
 
     CONSTRAINT PK_RICHIESTE PRIMARY KEY(NumTelefonicoUtente, CodSegnalazione)
 );
@@ -165,46 +163,6 @@ ALTER TABLE COINVOLGIMENTI
     REFERENCES SEGNALAZIONI(Codice);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazione.
 
--- TODO    
-/*
-CREATE OR REPLACE TRIGGER CONSERVA_SEGNALAZIONI
-AFTER DELETE ON UTENTI
-FOR EACH ROW
-DECLARE 
-    rNumeroDiTelefono UTENTI.NumeroDiTelefono%TYPE
-    rNome UTENTI.Nome%TYPE; 
-    rCognome UTENTI.Cognome%TYPE; 
-
-    rCodice SEGNALAZIONI.Codice%TYPE; 
-    rTipologiaEmergenza SEGNALAZIONI.TipologiaEmergenza%TYPE; 
-
-    rVia RICHIESTE.Via%TYPE;
-    rNumeroCivico RICHIESTE.NumeroCivico%TYPE;
-    rCittà RICHIESTE.Città%TYPE;
-    rProvincia RICHIESTE.Provincia%TYPE; 
-    rCAP RICHIESTE.CAP%TYPE; 
-    rTStamp RICHIESTE.TStamp%TYPE;
-
-    cursor r_set IS SELECT 	U.NumeroDiTelefono, U.Nome, U.Cognome,
-                            S.Codice, S.TipologiaEmergenze,
-                            R.Via, R.NumeroCivico, R.Città, R.Provincia, R.CAP, R.TStamp
-    FROM UTENTI U,  SEGNALAZIONI S, RICHIESTE R
-    WHERE 	R.NumTelefonicoUtente=U.NumeroDiTelefono AND
-            R.NumTelefonicoUtente=:old.NumeroDiTelefono AND 	
-            S.Codice=R.CodiceEmergenza; 
-BEGIN 
-    OPEN r_set; 
-    LOOP 
-        FECTH r_set INTO    rNumeroDiTelefono, rNome, rCognome,
-                            rCodice, rTipologiaEmergenza,
-                            rVia, rNumeroCivico, rCittà, rProvincia, rCAP, rTStamp;
-        INSERT INTO STORICO_SEGNALAZIONI
-        VALUES( rNumeroDiTelefono, rNome, rCognome, rCodice, rTipologiaEmergenza, rVia, rNumeroCivico, rCittà, rProvincia, rCAP, rTStamp); 
-    END LOOP; 
-    CLOSE r_set; 
-    DELETE FROM RICHIESTE WHERE R.IdPaziente=:old.ld;
-END;
-*/
 
 -- Revocazione dei privilegi
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Revoke riuscito/a."
