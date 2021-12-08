@@ -38,10 +38,7 @@ CREATE OR REPLACE PACKAGE PACK_SEN AS
         InRuolo IN OPERATORI.Ruolo%TYPE
     );
 
-    
-    -- FUNCTIONS
-    /*
-    FUNCTION join_centralinista(
+     PROCEDURE join_centralinista(
         InProvincia IN RICHIESTE.Provincia%TYPE,
         InCittà IN RICHIESTE.Città%TYPE,
         InCAP IN RICHIESTE.CAP%TYPE,
@@ -49,9 +46,6 @@ CREATE OR REPLACE PACKAGE PACK_SEN AS
         InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
         InTStamp IN RICHIESTE.TStamp%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
-    ) RETURN STORICO_SEGNALAZIONI;
-    */
-
-  /* TODO enter package declarations (types, exceptions, methods etc) here */ 
+    );
 
 END PACK_SEN;
