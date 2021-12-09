@@ -1,4 +1,4 @@
--- Si √® ora connessi come "sen". 
+-- Si Ë ora connessi come "sen". 
 
 -- Si procede innanzitutto con la creazione delle tabelle: File>Nuovo>Categorie: Livello database>Oggetti di database>Tabella.
 
@@ -8,10 +8,10 @@ CREATE TABLE UTENTI(
     Nome VARCHAR2(30) NOT NULL,
     Cognome VARCHAR2(30) NOT NULL,
     Provincia CHAR(2),
-    Citt√† VARCHAR2(35), -- La citt√† con nome pi√π lungo in Italia presenta ben 34 lettere 
+    Citt‡ VARCHAR2(35), -- La citt‡ con nome pi˘ lungo in Italia presenta ben 34 lettere 
     CAP NUMBER(5),
     Via VARCHAR2(35),
-    NumeroCivico NUMBER(5), -- Il numero civico pi√π alto in Italia √® circa 14500
+    NumeroCivico NUMBER(5), -- Il numero civico pi˘ alto in Italia Ë circa 14500
     
     CONSTRAINT PK_UTENTI PRIMARY KEY(NumeroDiTelefono)
 );
@@ -50,7 +50,7 @@ CREATE TABLE DIPARTIMENTI(
     NumeroOperatori NUMBER(6),
     NumeroVeicoli NUMBER(4),
     Provincia CHAR(2) NOT NULL,
-    Citt√† VARCHAR2(35) NOT NULL,
+    Citt‡ VARCHAR2(35) NOT NULL,
     CAP NUMBER(5) NOT NULL,
     Via VARCHAR2(35) NOT NULL,
     NumeroCivico NUMBER(5) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE RICHIESTE(
     NumTelefonicoUtente NUMBER(10),
     CodSegnalazione NUMBER(10),
     Provincia CHAR(2) NOT NULL,
-    Citt√† VARCHAR2(35) NOT NULL,
+    Citt‡ VARCHAR2(35) NOT NULL,
     CAP NUMBER(5),
     Via VARCHAR2(35) NOT NULL,
     NumeroCivico NUMBER(5),
@@ -103,6 +103,20 @@ CREATE TABLE COINVOLGIMENTI(
     CONSTRAINT PK_COINVOLGIMENTI PRIMARY KEY(IDDip, CodSegnalazione)
 );
 
+CREATE TABLE STORICO_SEGNALAZIONI (
+    NumeroDiTelefono NUMBER(10),
+    Nome VARCHAR2(30),
+    Cognome VARCHAR2(30),
+    Codice NUMBER(10),
+    TipologiaEmergenza VARCHAR2(30),
+    Provincia CHAR(2),
+    Citt‡ VARCHAR2(35), -- La citt‡ con nome pi˘ lungo in Italia presenta ben 34 lettere 
+    CAP NUMBER(5),
+    Via VARCHAR2(35),
+    NumeroCivico NUMBER(5), -- Il numero civico pi˘ alto in Italia Ë circa 14500
+    Data_Ora TIMESTAMP(0)
+);
+
 
 -- Definizione dei ruoli
 -- Ruolo utente e relativi privilegi
@@ -110,7 +124,7 @@ CREATE ROLE utente;                                      -- creazione del ruolo
 GRANT CONNECT TO utente;                                 -- attribuzione dei privilegi
 GRANT INSERT                 ON sen.RICHIESTE TO utente; -- attribuzione dei privilegi
 GRANT INSERT, UPDATE, DELETE ON sen.UTENTI TO utente;    -- attribuzione dei privilegi
--- Dopo ogni singolo GRANT, apparir√† nell'output screen "Grant riuscito/a."
+-- Dopo ogni singolo GRANT, apparir‡ nell'output screen "Grant riuscito/a."
 
 -- Ruolo amm_dipartimento e relativi privilegi
 CREATE ROLE amm_dipartimento;
@@ -133,7 +147,7 @@ GRANT INSERT, UPDATE, DELETE ON sen.COINVOLGIMENTI TO centralinista;
  * 2- idDip_seq per ID di DIPARTIMENTI;
  * 3- idOpe_seq per ID di OPERATORI.
  */
--- Dopo ogni singola esecuzione, apparir√† nell'output screen "Creato sequence <nome_sequence>."
+-- Dopo ogni singola esecuzione, apparir‡ nell'output screen "Creato sequence <nome_sequence>."
 -- Sequenza per il codice della segnalazione
 CREATE SEQUENCE codSeg_seq 
     INCREMENT BY 1
@@ -168,7 +182,7 @@ CREATE SEQUENCE idOpe_seq
  * 5- IDDip:DIPARTIMENTI per COINVOLGIMENTI;
  * 6- CodSegnalazione:SEGNALAZIONI per SEGNALAZIONI.
  */
--- Dopo ogni singola esecuzione, apparir√† nell'output screen "Table <nome_table> modificato."
+-- Dopo ogni singola esecuzione, apparir‡ nell'output screen "Table <nome_table> modificato."
 ALTER TABLE OPERATORI
     ADD CONSTRAINT FK_OPE_TIT FOREIGN KEY (SpecTitolo)
     REFERENCES TITOLIDISTUDI(Specializzazione);
@@ -201,14 +215,14 @@ ALTER TABLE COINVOLGIMENTI
 
 
 -- Eliminazione delle sequenze
--- Dopo ogni singola esecuzione, apparir√† nell'output screen "Sequence <nome_sequence> eliminato."
+-- Dopo ogni singola esecuzione, apparir‡ nell'output screen "Sequence <nome_sequence> eliminato."
 DROP SEQUENCE codSeg_seq;
 DROP SEQUENCE idDip_seq;
 DROP SEQUENCE idOpe_seq;
 
 
 -- Revocazione dei privilegi
--- Dopo ogni singola esecuzione, apparir√† nell'output screen "Revoke riuscito/a."
+-- Dopo ogni singola esecuzione, apparir‡ nell'output screen "Revoke riuscito/a."
 REVOKE INSERT                 ON sen.RICHIESTE      FROM utente;
 REVOKE INSERT, UPDATE, DELETE ON sen.DIPARTIMENTI   FROM amm_dipartimento;
 REVOKE INSERT, UPDATE, DELETE ON sen.OPERATORI      FROM amm_dipartimento;
@@ -220,14 +234,14 @@ REVOKE INSERT, UPDATE, DELETE ON sen.TITOLIDISTUDI  FROM amm_dipartimento;
 
 
 -- Rimozione dei ruoli
--- Dopo ogni singola esecuzione, apparir√† nell'output screen "Role <nome_role> eliminato."
+-- Dopo ogni singola esecuzione, apparir‡ nell'output screen "Role <nome_role> eliminato."
 DROP ROLE utente;
 DROP ROLE amm_dipartimento;
 DROP ROLE centralinista;
 
 
--- Eliminazione dei vincoli di integrit√† referenziale
--- Dopo ogni singola esecuzione, apparir√† nell'output screen "Table <nome_tabella> modificato."
+-- Eliminazione dei vincoli di integrit‡ referenziale
+-- Dopo ogni singola esecuzione, apparir‡ nell'output screen "Table <nome_tabella> modificato."
 ALTER TABLE OPERATORI      DROP CONSTRAINT FK_OPE_TIT;
 ALTER TABLE OPERATORI      DROP CONSTRAINT FK_OPE_SEG;  
 ALTER TABLE RICHIESTE      DROP CONSTRAINT FK_RIC_UTE;    
@@ -236,7 +250,7 @@ ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_DIP;
 ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_SEG;
     
 -- Eliminazione delle tabelle
--- Dopo ogni singola esecuzione, apparir√† nell'output screen "Table <nome_tabella> eliminato."
+-- Dopo ogni singola esecuzione, apparir‡ nell'output screen "Table <nome_tabella> eliminato."
 DROP TABLE OPERATORI;
 DROP TABLE RICHIESTE;
 DROP TABLE COINVOLGIMENTI;
@@ -244,7 +258,8 @@ DROP TABLE UTENTI;
 DROP TABLE DIPARTIMENTI;
 DROP TABLE TITOLIDISTUDI;
 DROP TABLE SEGNALAZIONI;
+DROP TABLE STORICO_SEGNALAZIONI;
 
 -- Eliminazione del package
--- Dopo l'esecuzione, apparir√† nell'output screen "Package PACK_SEN eliminato."
+-- Dopo l'esecuzione, apparir‡ nell'output screen "Package PACK_SEN eliminato."
 DROP PACKAGE PACK_SEN;
