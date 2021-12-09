@@ -1,0 +1,29 @@
+create or replace PROCEDURE informazioni_segnalazione(
+    InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
+    OutProvincia OUT RICHIESTE.Provincia%TYPE,
+    OutCittà OUT RICHIESTE.Città%TYPE,
+    OutCAP OUT RICHIESTE.CAP%TYPE,
+    OutVia OUT RICHIESTE.Via%TYPE,
+    OutNumeroCivico OUT RICHIESTE.NumeroCivico%TYPE,
+    OutData_Ora OUT RICHIESTE.Data_ora%TYPE,
+    OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE)
+IS
+
+BEGIN
+    SELECT R.Provincia, R.Città, R.CAP, R.Via, R.NumeroCivico, R.Data_Ora, S.TipologiaEmergenza
+    INTO OutProvincia, OutCittà, OutCAP, OutVia, OutNumeroCivico, OutData_Ora, OutTipologiaEmergenza
+    FROM RICHIESTE R
+    JOIN SEGNALAZIONI S
+    ON S.Codice = InCodiceSegnalazione AND S.Codice = R.CodSegnalazione;
+
+    -- stampa risultato del join
+    DBMS_OUTPUT.PUT_LINE('INFORMAZIONI RELATIVE ALLA SEGNALAZIONE NUMERO ' || InCodiceSegnalazione || ':');
+    DBMS_OUTPUT.PUT_LINE('Provincia = ' || OutProvincia);
+    DBMS_OUTPUT.PUT_LINE('Città = ' || OutCittà);
+    DBMS_OUTPUT.PUT_LINE('CAP = ' || OutCAP);
+    DBMS_OUTPUT.PUT_LINE('Via = ' || OutVia);
+    DBMS_OUTPUT.PUT_LINE('NumeroCivico = ' || OutNumeroCivico);
+    DBMS_OUTPUT.PUT_LINE('Data_Ora = ' || OutData_Ora);
+    DBMS_OUTPUT.PUT_LINE('TipologiaEmergenza = ' || OutTipologiaEmergenza);
+
+END;
