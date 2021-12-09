@@ -247,6 +247,28 @@ ALTER TABLE COINVOLGIMENTI
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
 
 
+--------------------------------------------------------------------------------
+
+-- SEQUENZA DI COMANDI
+SET SERVEROUT ON;
+
+EXEC PACK_SEN.inizializza;
+
+EXEC PACK_SEN.stampa_utenti;
+
+EXEC PACK_SEN.stampa_dipartimenti;
+
+EXEC PACK_SEN.stampa_operatori;
+
+-- TODO FUNZIONE NEL PACKAGE DI INSERIMENTO DELLE RICHIESTE
+-- (VOLENDO ANCHE STAMPA??)
+
+
+
+
+--------------------------------------------------------------------------------
+
+
 -- Eliminazione delle sequenze
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Sequence <nome_sequence> eliminato."
 DROP SEQUENCE codSeg_seq;
