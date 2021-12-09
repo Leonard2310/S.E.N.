@@ -71,27 +71,27 @@ create or replace PACKAGE BODY PACK_SEN IS
     IS
     BEGIN
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 115, 'Vigili del Fuoco', 
-                                    50, 1,
+                                    50, 0,
                                     'NA', 'Napoli', 80100, 
                                     'Largo Tarantini', 1);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 118, 'Pronto Soccorso', 
-                                    70, 1,
+                                    70, 0,
                                     'TO', 'Torino', 10126, 
                                     'Corso Bramante', 88);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 113, 'Polizia di Stato', 
-                                    50, 1,
+                                    50, 0,
                                     'MI', 'Milano', 20121, 
                                     'Via Fatebenefratelli', 11);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Arma dei Carabinieri', 
-                                    40, 1,
+                                    40, 0,
                                     'BA', 'Bari', 70121, 
                                     'Largo Tarantini', '1');
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 117, 'Guardia di Finanza', 
-                                    40, 1,
+                                    40, 0,
                                     'RM', 'Roma', 00162, 
                                     'Viale XXI Aprile', 51);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Esercito', 
-                                    30, 1, 
+                                    30, 0, 
                                     'PA', 'Palermo', 90134, 
                                     'Piazza del Parlamento', 5);
     END;
@@ -147,7 +147,34 @@ create or replace PACKAGE BODY PACK_SEN IS
     END;
 
 -----------------------------------     
-
+    PROCEDURE informazioni_segnalazione(
+        InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
+        OutProvincia OUT RICHIESTE.Provincia%TYPE,
+        OutCittà OUT RICHIESTE.Città%TYPE,
+        OutCAP OUT RICHIESTE.CAP%TYPE,
+        OutVia OUT RICHIESTE.Via%TYPE,
+        OutNumeroCivico OUT RICHIESTE.NumeroCivico%TYPE,
+        OutData_Ora OUT RICHIESTE.Data_ora%TYPE,
+        OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE)
+    IS
+    
+    BEGIN
+        SELECT R.Provincia, R.Città, R.CAP, R.Via, R.NumeroCivico, R.Data_Ora, S.TipologiaEmergenza
+        INTO OutProvincia, OutCittà, OutCAP, OutVia, OutNumeroCivico, OutData_Ora, OutTipologiaEmergenza
+        FROM RICHIESTE R
+        JOIN SEGNALAZIONI S
+        ON S.Codice = InCodiceSegnalazione AND S.Codice = R.CodSegnalazione;
+    
+        -- stampa risultato del join
+        DBMS_OUTPUT.PUT_LINE('INFORMAZIONI RELATIVE ALLA SEGNALAZIONE NUMERO ' || InCodiceSegnalazione || ':');
+        DBMS_OUTPUT.PUT_LINE('Provincia = ' || OutProvincia);
+        DBMS_OUTPUT.PUT_LINE('Città = ' || OutCittà);
+        DBMS_OUTPUT.PUT_LINE('CAP = ' || OutCAP);
+        DBMS_OUTPUT.PUT_LINE('Via = ' || OutVia);
+        DBMS_OUTPUT.PUT_LINE('NumeroCivico = ' || OutNumeroCivico);
+        DBMS_OUTPUT.PUT_LINE('Data_Ora = ' || OutData_Ora);
+        DBMS_OUTPUT.PUT_LINE('TipologiaEmergenza = ' || OutTipologiaEmergenza);
+    END;
 
   /* TODO enter package declarations (types, exceptions, methods etc) here */ 
   

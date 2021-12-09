@@ -43,8 +43,18 @@ IS
 
     PROCEDURE stampa_dipartimenti;
 
------------------------------------     
-
+----------------------------------- 
+    PROCEDURE informazioni_segnalazione(
+        InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
+        OutProvincia OUT RICHIESTE.Provincia%TYPE,
+        OutCittà OUT RICHIESTE.Città%TYPE,
+        OutCAP OUT RICHIESTE.CAP%TYPE,
+        OutVia OUT RICHIESTE.Via%TYPE,
+        OutNumeroCivico OUT RICHIESTE.NumeroCivico%TYPE,
+        OutData_Ora OUT RICHIESTE.Data_ora%TYPE,
+        OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE
+    );
+/*
     PROCEDURE valori_iniziali_operatori;
     
 -----------------------------------   
