@@ -1,4 +1,5 @@
-create or replace PACKAGE BODY PACK_SEN IS
+CREATE OR REPLACE 
+PACKAGE BODY PACK_SEN IS
 
     -- PROCEDURES
     PROCEDURE valori_iniziali_utenti 
@@ -145,8 +146,101 @@ create or replace PACKAGE BODY PACK_SEN IS
             END LOOP; 
         CLOSE cursore;
     END;
+----------------------------------
 
------------------------------------     
+   PROCEDURE valori_iniziali_operatori
+   IS
+   BEGIN
+       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Pietro', 'Tornindietro',
+                                    'Scienze Motorie', 1,
+                                    'Pompiere');
+       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Maria', 'Salvarezza',
+                                    'Infermieristica', 2,
+                                    'Infermiere');
+       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Federica', 'Varlese',
+                                    'Diploma scuola secondaria di secondo grado', 3,
+                                    'Poliziotto');
+       -- Operatore con due titoli di studio
+       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Fabio', 'Cristalli',
+                                    'Perito Agrario', 4,
+                                    'Carabiniere');
+           INSERT INTO OPERATORI VALUES(idDip_seq.CURRVAL,'Fabio', 'Cristalli',
+                                    'Lettere', 4,
+                                    'Carabiniere');
+       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Umberto', 'Pirozzi',
+                                    'Scienze Politiche', 5,
+                                    'Maresciallo di Finanza');
+       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Vittorio', 'Solombrino',
+                                    'Ingegnere meccanico', 6,
+                                    'Artificiere');
+    END;
+  
+-----------------------------------   
+    
+    PROCEDURE insert_operatore(
+        InNome IN VARCHAR2,
+        InCognome IN VARCHAR2,
+        InSpecTitolo VARCHAR2,
+        InIDDip NUMBER,
+        InRuolo IN VARCHAR2
+    )
+    IS
+    BEGIN
+        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, InNome, InCognome,
+                                InSpecTitolo, InIDDip, InRuolo);
+    END;
+
+-----------------------------------
+
+    PROCEDURE insert_nuovo_titolo_operatore(
+        InIDOpe IN NUMBER,
+        InSpecTitolo IN VARCHAR2
+    )
+    IS
+        CURSOR cursore IS SELECT * FROM OPERATORI;
+        record cursore%ROWTYPE;
+    BEGIN
+        OPEN cursore;
+        LOOP
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;
+            IF(record.ID=InIDOpe)
+            THEN
+                INSERT INTO OPERATORI VALUES(InIDOpe, record.Nome, record.Cognome, 
+                            InSpecTitolo, record.IDDip, record.Ruolo);
+            END IF;
+        END LOOP;
+        CLOSE cursore;
+    END;
+
+-----------------------------------   
+
+    PROCEDURE stampa_operatori
+    IS
+        CURSOR cursore IS SELECT * FROM OPERATORI;
+        record cursore%ROWTYPE;
+        counter number:=0;
+    BEGIN
+        OPEN cursore;
+        DBMS_OUTPUT.PUT_LINE('Tabella OPERATORI'); 
+        LOOP 
+            counter := counter + 1;
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;        
+            DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter             ||
+                        ' ID '               || record.ID           ||
+                        ' Nome '             || record.Nome         ||
+                        ' Cognome '          || record.Cognome      ||
+                        ' SpecTitolo '       || record.SpecTitolo   ||
+                        ' IDDip '            || record.IDDip        ||
+                        ' Ruolo '            || record.Ruolo        
+                        ); 
+            END LOOP; 
+        CLOSE cursore;
+    END;
+    
+-----------------------------------   
+
     PROCEDURE informazioni_segnalazione(
         InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
         OutProvincia OUT RICHIESTE.Provincia%TYPE,
@@ -175,7 +269,5 @@ create or replace PACKAGE BODY PACK_SEN IS
         DBMS_OUTPUT.PUT_LINE('Data_Ora = ' || OutData_Ora);
         DBMS_OUTPUT.PUT_LINE('TipologiaEmergenza = ' || OutTipologiaEmergenza);
     END;
-
-  /* TODO enter package declarations (types, exceptions, methods etc) here */ 
   
 END PACK_SEN;
