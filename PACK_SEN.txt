@@ -1,51 +1,77 @@
-CREATE OR REPLACE PACKAGE PACK_SEN AS 
+create or replace PACKAGE PACK_SEN 
+IS 
 
-    -- PROCEDURES
-    PROCEDURE insert_utenti(
-        InNumeroDiTelefono IN UTENTI.NumeroDiTelefono%TYPE,
-        InNome IN UTENTI.Nome%TYPE,
-        InCognome IN UTENTI.Cognome%TYPE,
-        InProvincia IN UTENTI.Provincia%TYPE,
-        InCittà IN UTENTI.Città%TYPE,
-        InCAP IN UTENTI.CAP%TYPE,
-        InVia IN UTENTI.Via%TYPE,
-        InNumeroCivico IN UTENTI.NumeroCivico%TYPE
+-- ***** PROCEDURES *****
+
+    PROCEDURE valori_iniziali_utenti;
+    
+-----------------------------------   
+    
+    PROCEDURE insert_utente(
+        InNumeroDiTelefono IN NUMBER,
+        InNome IN VARCHAR2,
+        InCognome IN VARCHAR2,
+        InProvincia IN CHAR,
+        InCittà IN VARCHAR2,
+        InCAP IN NUMBER,
+        InVia IN VARCHAR2,
+        InNumeroCivico IN NUMBER
     );
     
-    PROCEDURE insert_richieste(
+-----------------------------------   
+
+    PROCEDURE stampa_utenti;
+
+-----------------------------------  
+
+    PROCEDURE valori_iniziali_dipartimenti;
+    
+-----------------------------------   
+    
+    PROCEDURE insert_dipartimento(
+        InNumeroEmergenza IN NUMBER,
+        InTipologia IN VARCHAR2,
+        InNumeroVeicoli IN NUMBER,
+        InProvincia IN CHAR,
+        InCittà IN VARCHAR2,
+        InCAP IN NUMBER,
+        InVia IN VARCHAR2,
+        InNumeroCivico IN NUMBER
+    );
+
+-----------------------------------   
+
+    PROCEDURE stampa_dipartimenti;
+
+-----------------------------------     
+
+    PROCEDURE valori_iniziali_operatori;
+    
+-----------------------------------   
+    
+    PROCEDURE insert_operatore(
+        InNome IN VARCHAR2,
+        InCognome IN VARCHAR2,
+        InRuolo IN VARCHAR2
+        -- todo
+    );
+
+-----------------------------------   
+
+    PROCEDURE stampa_operatori;
+
+    /*
+    PROCEDURE join_centralinista(
         InProvincia IN RICHIESTE.Provincia%TYPE,
         InCittà IN RICHIESTE.Città%TYPE,
         InCAP IN RICHIESTE.CAP%TYPE,
         InVia IN RICHIESTE.Via%TYPE,
         InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
-        InTStamp IN RICHIESTE.TStamp%TYPE
-    );
-    
-    PROCEDURE valori_iniziali_dipartimento(
-        InNumeroEmergenza IN DIPARTIMENTI.NumeroEmergenza%TYPE,
-        InTipologia IN DIPARTIMENTI.Tipologia%TYPE,
-        InNumeroVeicoli IN DIPARTIMENTI.NumeroVeicoli%TYPE,
-        InProvincia IN DIPARTIMENTI.Provincia%TYPE,
-        InCittà IN DIPARTIMENTI.Città%TYPE,
-        InCAP IN DIPARTIMENTI.CAP%TYPE,
-        InVia IN DIPARTIMENTI.Via%TYPE,
-        InNumeroCivico IN DIPARTIMENTI.NumeroCivico%TYPE
-    );
-
-    PROCEDURE valori_iniziali_operatore(
-        InNome IN OPERATORI.Nome%TYPE,
-        InCognome IN OPERATORI.Cognome%TYPE,
-        InRuolo IN OPERATORI.Ruolo%TYPE
-    );
-
-     PROCEDURE join_centralinista(
-        InProvincia IN RICHIESTE.Provincia%TYPE,
-        InCittà IN RICHIESTE.Città%TYPE,
-        InCAP IN RICHIESTE.CAP%TYPE,
-        InVia IN RICHIESTE.Via%TYPE,
-        InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
-        InTStamp IN RICHIESTE.TStamp%TYPE,
+        InData_Ora IN RICHIESTE.Data_Ora%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
     );
+    */
+
+  /* TODO enter package declarations (types, exceptions, methods etc) here */ 
 
 END PACK_SEN;

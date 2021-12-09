@@ -1,0 +1,154 @@
+create or replace PACKAGE BODY PACK_SEN IS
+
+    -- PROCEDURES
+    PROCEDURE valori_iniziali_utenti 
+    IS
+    BEGIN
+        INSERT INTO UTENTI VALUES(3331231231, 'Leonardo', 'Catello', 
+                                    'NA', 'San Giorgio a Cremano', 80046, 
+                                    'Via Roma', 23);
+        INSERT INTO UTENTI VALUES(3334564564, 'Daiana', 'Cipollaro', 
+                                    'MI', 'Milano', 20019, 
+                                    'Via Torino', 1);    
+        INSERT INTO UTENTI VALUES(3662342342, 'Francesco', 'Di Serio', 
+                                    'CN', 'Cuneo', 12100, 
+                                    'Via Milano', 40);
+        INSERT INTO UTENTI VALUES(3667897897, 'Ciro', 'Gallucci', 
+                                    'RM', 'Tivoli', 00019, 
+                                    'Via Napoli', 7);
+    END;
+    
+-----------------------------------   
+    
+    PROCEDURE insert_utente(
+        InNumeroDiTelefono IN NUMBER,
+        InNome IN VARCHAR2,
+        InCognome IN VARCHAR2,
+        InProvincia IN CHAR,
+        InCittà IN VARCHAR2,
+        InCAP IN NUMBER,
+        InVia IN VARCHAR2,
+        InNumeroCivico IN NUMBER
+    )
+    IS
+    BEGIN
+        INSERT INTO UTENTI VALUES(InNumeroDiTelefono, InNome, InCognome,
+                                InProvincia, InCittà, InCAP,
+                                InVia, InNumeroCivico);
+    END;
+    
+-----------------------------------   
+
+    PROCEDURE stampa_utenti
+    IS
+        CURSOR cursore IS SELECT * FROM UTENTI;
+        record cursore%ROWTYPE;
+        counter number:=0;
+    BEGIN
+        OPEN cursore;
+        DBMS_OUTPUT.PUT_LINE('Tabella UTENTI'); 
+        LOOP 
+            counter := counter + 1;
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;        
+            DBMS_OUTPUT.PUT_LINE('Riga n# '     || counter                 ||
+                        ' Numero di telefono '  || record.NumeroDiTelefono ||
+                        ' Nome '                || record.Nome             ||
+                        ' Cognome '             || record.Cognome          ||
+                        ' Provincia '           || record.Provincia        ||
+                        ' Città '               || record.Città            ||
+                        ' CAP '                 || record.CAP              || 
+                        ' Via '                 || record.Via              ||
+                        ' Numero civico '       || record.NumeroCivico
+                        ); 
+            END LOOP; 
+        CLOSE cursore;
+    END;
+
+-----------------------------------   
+
+    PROCEDURE valori_iniziali_dipartimenti
+    IS
+    BEGIN
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 115, 'Vigili del Fuoco', 
+                                    50, 1,
+                                    'NA', 'Napoli', 80100, 
+                                    'Largo Tarantini', 1);
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 118, 'Pronto Soccorso', 
+                                    70, 1,
+                                    'TO', 'Torino', 10126, 
+                                    'Corso Bramante', 88);
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 113, 'Polizia di Stato', 
+                                    50, 1,
+                                    'MI', 'Milano', 20121, 
+                                    'Via Fatebenefratelli', 11);
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Arma dei Carabinieri', 
+                                    40, 1,
+                                    'BA', 'Bari', 70121, 
+                                    'Largo Tarantini', '1');
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 117, 'Guardia di Finanza', 
+                                    40, 1,
+                                    'RM', 'Roma', 00162, 
+                                    'Viale XXI Aprile', 51);
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Esercito', 
+                                    30, 1, 
+                                    'PA', 'Palermo', 90134, 
+                                    'Piazza del Parlamento', 5);
+    END;
+    
+-----------------------------------   
+    
+    PROCEDURE insert_dipartimento(
+        InNumeroEmergenza IN NUMBER,
+        InTipologia IN VARCHAR2,
+        InNumeroVeicoli IN NUMBER,
+        InProvincia IN CHAR,
+        InCittà IN VARCHAR2,
+        InCAP IN NUMBER,
+        InVia IN VARCHAR2,
+        InNumeroCivico IN NUMBER
+    )
+    IS
+    BEGIN
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, InNumeroEmergenza, InTipologia,
+                                InNumeroVeicoli, 0,
+                                InProvincia, InCittà, InCAP, 
+                                InVia, InNumeroCivico);
+    END;
+
+-----------------------------------   
+
+    PROCEDURE stampa_dipartimenti
+    IS
+        CURSOR cursore IS SELECT * FROM DIPARTIMENTI;
+        record cursore%ROWTYPE;
+        counter number:=0;
+    BEGIN
+        OPEN cursore;
+        DBMS_OUTPUT.PUT_LINE('Tabella DIPARTIMENTI'); 
+        LOOP 
+            counter := counter + 1;
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;        
+            DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter                 ||
+                        ' ID '               || record.ID               ||
+                        ' NumeroEmergenza '  || record.NumeroEmergenza  ||
+                        ' Tipologia '        || record.Tipologia        ||
+                        ' NumeroVeicoli '    || record.NumeroVeicoli    ||
+                        ' NumeroOperatori '  || record.NumeroOperatori  ||
+                        ' Provincia '        || record.Provincia        ||
+                        ' Città '            || record.Città            ||
+                        ' CAP '              || record.CAP              || 
+                        ' Via '              || record.Via              ||
+                        ' Numero civico '    || record.NumeroCivico
+                        ); 
+            END LOOP; 
+        CLOSE cursore;
+    END;
+
+-----------------------------------     
+
+
+  /* TODO enter package declarations (types, exceptions, methods etc) here */ 
+  
+END PACK_SEN;
