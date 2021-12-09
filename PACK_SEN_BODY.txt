@@ -241,6 +241,16 @@ PACKAGE BODY PACK_SEN IS
     
 -----------------------------------   
 
+    PROCEDURE valori_iniziali
+    IS 
+    BEGIN
+       valori_iniziali_utenti;
+       valori_iniziali_dipartimenti;
+       valori_iniziali_operatori;
+    END;
+
+-----------------------------------
+
     PROCEDURE informazioni_segnalazione(
         InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
         OutProvincia OUT RICHIESTE.Provincia%TYPE,

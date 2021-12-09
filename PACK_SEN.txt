@@ -70,6 +70,10 @@ IS
 
 -----------------------------------
 
+    PROCEDURE valori_iniziali;
+    
+-----------------------------------
+    
     PROCEDURE informazioni_segnalazione(
         InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
         OutProvincia OUT RICHIESTE.Provincia%TYPE,
@@ -82,18 +86,5 @@ IS
     );
 
 -----------------------------------
-    /*
-    PROCEDURE join_centralinista(
-        InProvincia IN RICHIESTE.Provincia%TYPE,
-        InCittà IN RICHIESTE.Città%TYPE,
-        InCAP IN RICHIESTE.CAP%TYPE,
-        InVia IN RICHIESTE.Via%TYPE,
-        InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
-        InData_Ora IN RICHIESTE.Data_Ora%TYPE,
-        InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
-    );
-    */
-
-  /* TODO enter package declarations (types, exceptions, methods etc) here */ 
-
+    
 END PACK_SEN;
