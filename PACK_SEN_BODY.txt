@@ -1,4 +1,5 @@
-create or replace PACKAGE BODY PACK_SEN IS
+CREATE OR REPLACE 
+PACKAGE BODY PACK_SEN IS
 
     -- PROCEDURES
     PROCEDURE valori_iniziali_utenti 
@@ -175,7 +176,5 @@ create or replace PACKAGE BODY PACK_SEN IS
         DBMS_OUTPUT.PUT_LINE('Data_Ora = ' || OutData_Ora);
         DBMS_OUTPUT.PUT_LINE('TipologiaEmergenza = ' || OutTipologiaEmergenza);
     END;
-
-  /* TODO enter package declarations (types, exceptions, methods etc) here */ 
   
 END PACK_SEN;
