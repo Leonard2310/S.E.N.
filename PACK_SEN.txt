@@ -52,9 +52,9 @@ IS
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
         InCognome IN VARCHAR2,
-        InIDDip IN NUMBER,
-        InRuolo IN VARCHAR2,
-        InSpecTitolo IN VARCHAR2
+        InSpecTitolo VARCHAR2,
+        InIDDip NUMBER,
+        InRuolo IN VARCHAR2
     );
 
 -----------------------------------
@@ -68,7 +68,7 @@ IS
 
     PROCEDURE stampa_operatori;
 
------------------------------------ 
+-----------------------------------
 
     PROCEDURE valori_iniziali;
 
@@ -81,7 +81,7 @@ IS
         InCAP IN RICHIESTE.CAP%TYPE,
         InVia IN RICHIESTE.Via%TYPE,
         InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
-        InData_Ora IN RICHIESTE.Data_ora%TYPE,
+        InData_Ora IN RICHIESTE.Data_Ora%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
     );
     
@@ -94,7 +94,7 @@ IS
         OutCAP OUT RICHIESTE.CAP%TYPE,
         OutVia OUT RICHIESTE.Via%TYPE,
         OutNumeroCivico OUT RICHIESTE.NumeroCivico%TYPE,
-        OutData_Ora OUT RICHIESTE.Data_ora%TYPE,
+        OutData_Ora OUT RICHIESTE.Data_Ora%TYPE,
         OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE
     );
 

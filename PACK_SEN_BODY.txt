@@ -153,20 +153,25 @@ create or replace PACKAGE BODY PACK_SEN IS
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Pietro', 'Tornindietro',
                                     1, 'Pompiere');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Motorie');
+       
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Maria', 'Salvarezza',
                                     2, 'Infermiere');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Infermieristica');
+       
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Federica', 'Varlese',
                                     3, 'Poliziotto');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Diploma scuola secondaria di secondo grado');
+       
        -- Operatore con due titoli di studio
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Fabio', 'Cristalli',
                                     4, 'Carabiniere');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Perito Agrario');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Lettere');
+       
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Umberto', 'Pirozzi',
                                     5, 'Maresciallo di Finanza');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Politiche');
+       
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Vittorio', 'Solombrino',
                                     6, 'Artificiere');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Ingegneria meccanica');                                    
@@ -177,9 +182,9 @@ create or replace PACKAGE BODY PACK_SEN IS
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
         InCognome IN VARCHAR2,
-        InIDDip IN NUMBER,
-        InRuolo IN VARCHAR2,
-        InSpecTitolo IN VARCHAR2
+        InSpecTitolo VARCHAR2,
+        InIDDip NUMBER,
+        InRuolo IN VARCHAR2
     )
     IS
     BEGIN
@@ -244,7 +249,7 @@ create or replace PACKAGE BODY PACK_SEN IS
         InCAP IN RICHIESTE.CAP%TYPE,
         InVia IN RICHIESTE.Via%TYPE,
         InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
-        InData_Ora IN RICHIESTE.Data_ora%TYPE,
+        InData_Ora IN RICHIESTE.Data_Ora%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
     )
     IS
@@ -263,7 +268,7 @@ create or replace PACKAGE BODY PACK_SEN IS
         OutCAP OUT RICHIESTE.CAP%TYPE,
         OutVia OUT RICHIESTE.Via%TYPE,
         OutNumeroCivico OUT RICHIESTE.NumeroCivico%TYPE,
-        OutData_Ora OUT RICHIESTE.Data_ora%TYPE,
+        OutData_Ora OUT RICHIESTE.Data_Ora%TYPE,
         OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE)
     IS
     BEGIN
