@@ -99,7 +99,6 @@ CREATE TABLE OPERATORI(
     ID NUMBER(6),
     Nome VARCHAR2(30) NOT NULL,
     Cognome VARCHAR2(30) NOT NULL,
-    SpecTitolo VARCHAR2(50),
     IDDip NUMBER(4) NOT NULL,
     Ruolo VARCHAR2(30) NOT NULL,
     
@@ -113,7 +112,15 @@ CREATE TABLE TITOLIDISTUDI(
     CONSTRAINT PK_TITOLIDISTUDI PRIMARY KEY(Specializzazione)
 );
 
--- 6) Tabella richieste
+-- 6) Tabella competenze
+CREATE TABLE COMPETENZE(
+    IDOpe NUMBER(6),
+    SpecTitolo VARCHAR2(50),    
+    
+    CONSTRAINT PK_COMPETENZE PRIMARY KEY(IDOpe, SpecTitolo)
+);
+
+-- 7) Tabella richieste
 CREATE TABLE RICHIESTE(
     NumTelefonicoUtente NUMBER(10),
     CodSegnalazione NUMBER(10),
@@ -127,7 +134,7 @@ CREATE TABLE RICHIESTE(
     CONSTRAINT PK_RICHIESTE PRIMARY KEY(NumTelefonicoUtente, CodSegnalazione)
 );
 
--- 7) Tabella coinvolgimenti
+-- 8) Tabella coinvolgimenti
 CREATE TABLE COINVOLGIMENTI(
     IDDip NUMBER(4),
     CodSegnalazione NUMBER(10),
@@ -135,7 +142,7 @@ CREATE TABLE COINVOLGIMENTI(
     CONSTRAINT PK_COINVOLGIMENTI PRIMARY KEY(IDDip, CodSegnalazione)
 );
 
--- 8) Tabella storico_segnalazioni
+-- 9) Tabella storico_segnalazioni
 CREATE TABLE STORICO_SEGNALAZIONI (
     NumeroDiTelefono NUMBER(10),
     Nome VARCHAR2(30),
@@ -165,6 +172,7 @@ GRANT CONNECT TO amm_dipartimento;
 GRANT INSERT, UPDATE, DELETE ON sen.DIPARTIMENTI   TO amm_dipartimento;
 GRANT INSERT, UPDATE, DELETE ON sen.OPERATORI      TO amm_dipartimento;
 GRANT INSERT, UPDATE, DELETE ON sen.TITOLIDISTUDI  TO amm_dipartimento;
+GRANT INSERT, UPDATE, DELETE ON sen.COMPETENZE  TO amm_dipartimento;
 
 -- Ruolo centralinista e relativi privilegi
 CREATE ROLE centralinista;
@@ -208,19 +216,15 @@ CREATE SEQUENCE idOpe_seq
 
 -- Aggiunta delle chiavi esterne
 /* Si aggiungono le seguenti chiavi esterne:
- * 1- SpecTitolo:TITOLIDISTUDI per OPERATORI;
- * 2- IDDip:DIPARTIMENTI per OPERATORI;
- * 3- NumTelefonicoUtente:UTENTI per RICHIESTE;
- * 4- CodSegnalazione:SEGNALAZIONI per RICHIESTE;
- * 5- IDDip:DIPARTIMENTI per COINVOLGIMENTI;
- * 6- CodSegnalazione:SEGNALAZIONI per SEGNALAZIONI.
+ * 1- IDDip:DIPARTIMENTI per OPERATORI;
+ * 2- NumTelefonicoUtente:UTENTI per RICHIESTE;
+ * 3- CodSegnalazione:SEGNALAZIONI per RICHIESTE;
+ * 4- IDDip:DIPARTIMENTI per COINVOLGIMENTI;
+ * 5- CodSegnalazione:SEGNALAZIONI per COINVOLGIMENTI;
+ * 6- IDOpe:OPERATORI per COMPETENZE;
+ * 7- SpecTitolo:TITOLIDISTUDI per COMPETENZE.
  */
--- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_table> modificato."
-ALTER TABLE OPERATORI
-    ADD CONSTRAINT FK_OPE_TIT FOREIGN KEY (SpecTitolo)
-    REFERENCES TITOLIDISTUDI(Specializzazione);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di TitoliDiStudi.
-    
+-- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_table> modificato."    
 ALTER TABLE OPERATORI
     ADD CONSTRAINT FK_OPE_SEG FOREIGN KEY (IDDip)
     REFERENCES DIPARTIMENTI(ID);
@@ -245,6 +249,16 @@ ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_SEG FOREIGN KEY (CodSegnalazione)
     REFERENCES SEGNALAZIONI(Codice);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
+    
+ALTER TABLE COMPETENZE
+    ADD CONSTRAINT FK_COM_OPE FOREIGN KEY (IDOpe)
+    REFERENCES OPERATORI(ID);
+    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Operatori.
+    
+ALTER TABLE COMPETENZE
+    ADD CONSTRAINT FK_COM_TIT FOREIGN KEY (SpecTitolo)
+    REFERENCES TITOLIDISTUDI(Specializzazione);
+    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di TitoliDiStudi.
 
 
 --------------------------------------------------------------------------------
@@ -286,6 +300,7 @@ REVOKE SELECT                 ON sen.RICHIESTE      FROM centralinista;
 REVOKE INSERT, UPDATE, DELETE ON sen.UTENTI         FROM utente;
 REVOKE INSERT, UPDATE, DELETE ON sen.COINVOLGIMENTI FROM centralinista;
 REVOKE INSERT, UPDATE, DELETE ON sen.TITOLIDISTUDI  FROM amm_dipartimento;
+REVOKE INSERT, UPDATE, DELETE ON sen.COMPETENZE     FROM amm_dipartimento;
 
 
 -- Rimozione dei ruoli
@@ -297,12 +312,13 @@ DROP ROLE centralinista;
 
 -- Eliminazione dei vincoli di integrità referenziale
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_tabella> modificato."
-ALTER TABLE OPERATORI      DROP CONSTRAINT FK_OPE_TIT;
 ALTER TABLE OPERATORI      DROP CONSTRAINT FK_OPE_SEG;  
 ALTER TABLE RICHIESTE      DROP CONSTRAINT FK_RIC_UTE;    
 ALTER TABLE RICHIESTE      DROP CONSTRAINT FK_RIC_SEG;    
 ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_DIP;    
 ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_SEG;
+ALTER TABLE COMPETENZE     DROP CONSTRAINT FK_COM_OPE;
+ALTER TABLE COMPETENZE     DROP CONSTRAINT FK_COM_TIT;
     
 -- Eliminazione delle tabelle
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_tabella> eliminato."
@@ -312,9 +328,11 @@ DROP TABLE COINVOLGIMENTI;
 DROP TABLE UTENTI;
 DROP TABLE DIPARTIMENTI;
 DROP TABLE TITOLIDISTUDI;
+DROP TABLE COMPETENZE;
 DROP TABLE SEGNALAZIONI;
 DROP TABLE STORICO_SEGNALAZIONI;
 
 -- Eliminazione del package
 -- Dopo l'esecuzione, apparirà nell'output screen "Package PACK_SEN eliminato."
 DROP PACKAGE PACK_SEN;
+
