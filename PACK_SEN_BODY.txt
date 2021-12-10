@@ -199,7 +199,7 @@ create or replace PACKAGE BODY PACK_SEN IS
     END;
 
 ----------------------------------- 
- 
+ /*
     PROCEDURE valori_iniziali_titoli
     IS
     BEGIN
@@ -212,7 +212,7 @@ create or replace PACKAGE BODY PACK_SEN IS
         INSERT INTO TITOLIDISTUDI VALUES('Ingegneria Meccanica');
         INSERT INTO TITOLIDISTUDI VALUES('Ragioneria');
     END;
-    
+   */ 
 ----------------------------------- 
 
     PROCEDURE insert_operatore(

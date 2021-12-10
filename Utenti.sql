@@ -283,7 +283,8 @@ EXEC PACK_SEN.stampa_utenti;
 INSERT INTO UTENTI VALUES(3990001234, 'Carlo', 'Conti', 'FI', 'Firenze', 50122, 'Viale Bach', 2);
 EXEC PACK_SEN.stampa_utenti;
 
-EXEC PACK_SEN.delete_utente(3234441111); -- Rimuovo Mike Bongiorno
+-- Rimuovo Mike Bongiorno
+EXEC PACK_SEN.delete_utente(3234441111); 
 EXEC PACK_SEN.stampa_utenti;
 
 
@@ -294,20 +295,23 @@ EXEC PACK_SEN.stampa_dipartimenti;
 EXEC PACK_SEN.insert_dipartimento(113, 'Polizia di Stato', 40, 'BO', 'Bologna', 40121, 'Corso Navona', 1);
 EXEC PACK_SEN.stampa_dipartimenti;
 
-EXEC PACK_SEN.delete_dipartimento(7); -- Rimuovo Polizia di Stato di Bologna, ID=7
+-- Rimuovo Polizia di Stato di Bologna, ID=7
+EXEC PACK_SEN.delete_dipartimento(7); 
 EXEC PACK_SEN.stampa_dipartimenti;
 
 ----- TITOLI DI STUDI
-EXEC PACK_SEN.valori_iniziali_titoli;
+--EXEC PACK_SEN.valori_iniziali_titoli;
 
 
 ----- OPERATORI
 EXEC PACK_SEN.valori_iniziali_operatori;
 EXEC PACK_SEN.stampa_operatori;
+EXEC PACK_SEN.stampa_dipartimenti;
 
 EXEC PACK_SEN.insert_operatore('Carla', 'Fracci', 'Ragioneria', 5, 'Ragioniere');
 INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Politiche');
 EXEC PACK_SEN.stampa_operatori;
+EXEC PACK_SEN.stampa_dipartimenti;
 
 
 

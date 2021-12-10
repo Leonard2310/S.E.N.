@@ -57,7 +57,7 @@ IS
     
 -----------------------------------  
  
-    PROCEDURE valori_iniziali_titoli;  
+    --PROCEDURE valori_iniziali_titoli;  
     
 ----------------------------------- 
 
