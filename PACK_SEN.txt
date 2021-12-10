@@ -29,6 +29,7 @@ IS
     );
 
 ----------------------------------- 
+
     PROCEDURE valori_iniziali_dipartimenti;
 
 -----------------------------------   
@@ -50,11 +51,17 @@ IS
 
 ----------------------------------- 
 
-    PROCEDURE valori_iniziali_operatori;
-
+    PROCEDURE delete_dipartimento(
+        InID IN NUMBER
+    );
+    
 -----------------------------------  
  
-    --PROCEDURE valori_iniziali_titoli;
+    PROCEDURE valori_iniziali_titoli;  
+    
+----------------------------------- 
+
+    PROCEDURE valori_iniziali_operatori;
 
 -----------------------------------  
 

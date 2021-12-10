@@ -73,10 +73,11 @@ create or replace PACKAGE BODY PACK_SEN IS
     )
     IS
     BEGIN
-        DELETE FROM UTENTI WHERE NumeroDiTelefono = InNumeroDiTelefono;
+        DELETE FROM UTENTI WHERE (NumeroDiTelefono = InNumeroDiTelefono);
     END;
 
 -----------------------------------   
+
     PROCEDURE valori_iniziali_dipartimenti
     IS
     BEGIN
@@ -157,6 +158,16 @@ create or replace PACKAGE BODY PACK_SEN IS
     END;
 ----------------------------------
 
+    PROCEDURE delete_dipartimento(
+        InID IN NUMBER
+    )
+    IS
+    BEGIN
+        DELETE FROM DIPARTIMENTI WHERE (ID = InID);
+    END;
+    
+----------------------------------
+    
    PROCEDURE valori_iniziali_operatori
    IS
    BEGIN
@@ -187,7 +198,22 @@ create or replace PACKAGE BODY PACK_SEN IS
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Ingegneria meccanica');                                    
     END;
 
------------------------------------   
+----------------------------------- 
+ 
+    PROCEDURE valori_iniziali_titoli
+    IS
+    BEGIN
+        INSERT INTO TITOLIDISTUDI VALUES('Diploma scuola secondaria di secondo grado');
+        INSERT INTO TITOLIDISTUDI VALUES('Scienze Motorie');
+        INSERT INTO TITOLIDISTUDI VALUES('Infermieristica');
+        INSERT INTO TITOLIDISTUDI VALUES('Perito Agrario');
+        INSERT INTO TITOLIDISTUDI VALUES('Lettere');
+        INSERT INTO TITOLIDISTUDI VALUES('Scienze Politiche');
+        INSERT INTO TITOLIDISTUDI VALUES('Ingegneria Meccanica');
+        INSERT INTO TITOLIDISTUDI VALUES('Ragioneria');
+    END;
+    
+----------------------------------- 
 
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
@@ -209,8 +235,7 @@ create or replace PACKAGE BODY PACK_SEN IS
         InIDOpe IN NUMBER,
         InSpecTitolo IN VARCHAR2
     )
-    IS
-        
+    IS 
     BEGIN
         INSERT INTO COMPETENZE VALUES(InIDOpe, InSpecTitolo);
     END;
