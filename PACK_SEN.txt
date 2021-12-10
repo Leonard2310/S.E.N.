@@ -52,9 +52,9 @@ IS
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
         InCognome IN VARCHAR2,
-        InSpecTitolo VARCHAR2,
-        InIDDip NUMBER,
-        InRuolo IN VARCHAR2
+        InIDDip IN NUMBER,
+        InRuolo IN VARCHAR2,
+        InSpecTitolo IN VARCHAR2
     );
 
 -----------------------------------
@@ -68,7 +68,7 @@ IS
 
     PROCEDURE stampa_operatori;
 
------------------------------------
+----------------------------------- 
 
     PROCEDURE valori_iniziali;
 
