@@ -51,16 +51,17 @@ create or replace PACKAGE BODY PACK_SEN IS
             counter := counter + 1;
             FETCH cursore INTO record;
             EXIT WHEN cursore%NOTFOUND;        
-            DBMS_OUTPUT.PUT_LINE('Riga n# '     || counter                 ||
-                        ' Numero di telefono '  || record.NumeroDiTelefono ||
-                        ' Nome '                || record.Nome             ||
-                        ' Cognome '             || record.Cognome          ||
-                        ' Provincia '           || record.Provincia        ||
-                        ' Città '               || record.Città            ||
-                        ' CAP '                 || record.CAP              || 
-                        ' Via '                 || record.Via              ||
-                        ' Numero civico '       || record.NumeroCivico
-                        ); 
+            DBMS_OUTPUT.PUT_LINE('Riga n# '     || counter);                 
+            DBMS_OUTPUT.PUT_LINE('  Numero di telefono: '  || record.NumeroDiTelefono);
+            DBMS_OUTPUT.PUT_LINE('  Nome: '                || record.Nome);      
+            DBMS_OUTPUT.PUT_LINE('  Cognome: '             || record.Cognome);       
+            DBMS_OUTPUT.PUT_LINE('  Provincia: '           || record.Provincia);      
+            DBMS_OUTPUT.PUT_LINE('  Città: '               || record.Città);         
+            DBMS_OUTPUT.PUT_LINE('  CAP: '                 || record.CAP);             
+            DBMS_OUTPUT.PUT_LINE('  Via: '                 || record.Via);              
+            DBMS_OUTPUT.PUT_LINE('  Numero civico: '       || record.NumeroCivico);
+            DBMS_OUTPUT.PUT_LINE('');
+                     
             END LOOP; 
         CLOSE cursore;
     END;
@@ -130,18 +131,18 @@ create or replace PACKAGE BODY PACK_SEN IS
             counter := counter + 1;
             FETCH cursore INTO record;
             EXIT WHEN cursore%NOTFOUND;        
-            DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter                 ||
-                        ' ID '               || record.ID               ||
-                        ' NumeroEmergenza '  || record.NumeroEmergenza  ||
-                        ' Tipologia '        || record.Tipologia        ||
-                        ' NumeroVeicoli '    || record.NumeroVeicoli    ||
-                        ' NumeroOperatori '  || record.NumeroOperatori  ||
-                        ' Provincia '        || record.Provincia        ||
-                        ' Città '            || record.Città            ||
-                        ' CAP '              || record.CAP              || 
-                        ' Via '              || record.Via              ||
-                        ' Numero civico '    || record.NumeroCivico
-                        ); 
+            DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter);
+            DBMS_OUTPUT.PUT_LINE('  ID: '               || record.ID);
+            DBMS_OUTPUT.PUT_LINE('  Numero emergenza: '  || record.NumeroEmergenza);
+            DBMS_OUTPUT.PUT_LINE('  Tipologia: '        || record.Tipologia );
+            DBMS_OUTPUT.PUT_LINE('  Numero veicoli: '    || record.NumeroVeicoli);
+            DBMS_OUTPUT.PUT_LINE('  Numero operatori: '  || record.NumeroOperatori);
+            DBMS_OUTPUT.PUT_LINE('  Provincia: '        || record.Provincia);
+            DBMS_OUTPUT.PUT_LINE('  Città: '            || record.Città);
+            DBMS_OUTPUT.PUT_LINE('  CAP: '              || record.CAP);
+            DBMS_OUTPUT.PUT_LINE('  Via: '              || record.Via);
+            DBMS_OUTPUT.PUT_LINE('  Numero civico: '    || record.NumeroCivico );
+            DBMS_OUTPUT.PUT_LINE('');
             END LOOP; 
         CLOSE cursore;
     END;
@@ -219,13 +220,13 @@ create or replace PACKAGE BODY PACK_SEN IS
             counter := counter + 1;
             FETCH cursore INTO record;
             EXIT WHEN cursore%NOTFOUND;        
-            DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter             ||
-                        ' ID '               || record.ID           ||
-                        ' Nome '             || record.Nome         ||
-                        ' Cognome '          || record.Cognome      ||
-                        ' IDDip '            || record.IDDip        ||
-                        ' Ruolo '            || record.Ruolo        
-                        ); 
+            DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter);
+            DBMS_OUTPUT.PUT_LINE('  ID: '               || record.ID);
+            DBMS_OUTPUT.PUT_LINE('  Nome: '             || record.Nome);
+            DBMS_OUTPUT.PUT_LINE('  Cognome: '          || record.Cognome);
+            DBMS_OUTPUT.PUT_LINE('  ID dipartimento: '            || record.IDDip);
+            DBMS_OUTPUT.PUT_LINE('  Ruolo: '            || record.Ruolo);        
+            DBMS_OUTPUT.PUT_LINE('');             
             END LOOP; 
         CLOSE cursore;
     END;
@@ -280,13 +281,13 @@ create or replace PACKAGE BODY PACK_SEN IS
 
         -- stampa risultato del join
         DBMS_OUTPUT.PUT_LINE('INFORMAZIONI RELATIVE ALLA SEGNALAZIONE NUMERO ' || InCodiceSegnalazione || ':');
-        DBMS_OUTPUT.PUT_LINE('Provincia = ' || OutProvincia);
-        DBMS_OUTPUT.PUT_LINE('Città = ' || OutCittà);
-        DBMS_OUTPUT.PUT_LINE('CAP = ' || OutCAP);
-        DBMS_OUTPUT.PUT_LINE('Via = ' || OutVia);
-        DBMS_OUTPUT.PUT_LINE('NumeroCivico = ' || OutNumeroCivico);
-        DBMS_OUTPUT.PUT_LINE('Data_Ora = ' || OutData_Ora);
-        DBMS_OUTPUT.PUT_LINE('TipologiaEmergenza = ' || OutTipologiaEmergenza);
+        DBMS_OUTPUT.PUT_LINE('  Provincia: ' || OutProvincia);
+        DBMS_OUTPUT.PUT_LINE('  Città: ' || OutCittà);
+        DBMS_OUTPUT.PUT_LINE('  CAP: ' || OutCAP);
+        DBMS_OUTPUT.PUT_LINE('  Via: ' || OutVia);
+        DBMS_OUTPUT.PUT_LINE('  Numero civico: ' || OutNumeroCivico);
+        DBMS_OUTPUT.PUT_LINE('  Data e ora: ' || OutData_Ora);
+        DBMS_OUTPUT.PUT_LINE('  Tipologia emergenza: ' || OutTipologiaEmergenza);
     END;
 
 

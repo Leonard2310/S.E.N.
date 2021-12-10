@@ -47,7 +47,11 @@ IS
 
     PROCEDURE valori_iniziali_operatori;
 
------------------------------------   
+-----------------------------------  
+ 
+    --PROCEDURE valori_iniziali_titoli;
+
+-----------------------------------  
 
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
