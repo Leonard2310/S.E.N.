@@ -1,11 +1,7 @@
 CREATE OR REPLACE TRIGGER CONSERVA_SEGNALAZIONI
     AFTER DELETE ON UTENTI
     FOR EACH ROW
-    DECLARE 
-        tNumeroDiTelefono UTENTI.NumeroDiTelefono%TYPE;
-        tNome UTENTI.Nome%TYPE; 
-        tCognome UTENTI.Cognome%TYPE; 
-    
+    DECLARE     
         tCodice SEGNALAZIONI.Codice%TYPE; 
         tTipologiaEmergenza SEGNALAZIONI.TipologiaEmergenza%TYPE; 
     
@@ -28,8 +24,8 @@ CREATE OR REPLACE TRIGGER CONSERVA_SEGNALAZIONI
                                 tVia, tNumeroCivico, tCittà, tProvincia, tCAP, tData_Ora;
             EXIT WHEN t_set%NOTFOUND;
             INSERT INTO STORICO_SEGNALAZIONI
-            VALUES( :OLD.NumeroDiTelefono, :OLD.Nome, :OLD.Cognome, tCodice, tTipologiaEmergenza, tVia, 
-                    tNumeroCivico, tCittà, tProvincia, tCAP, tData_Ora); 
+            VALUES( :OLD.NumeroDiTelefono, :OLD.Nome, :OLD.Cognome, tCodice, tTipologiaEmergenza, 
+                    tProvincia, tCittà, tCAP, tVia, tNumeroCivico, tData_Ora); 
         END LOOP; 
         CLOSE t_set; 
         DELETE FROM RICHIESTE WHERE NumTelefonicoUtente=:old.NumeroDiTelefono;
