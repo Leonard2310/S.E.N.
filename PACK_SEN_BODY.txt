@@ -250,6 +250,25 @@ create or replace PACKAGE BODY PACK_SEN IS
 
 -----------------------------------
 
+    PROCEDURE insert_richiesta_segnalazione(
+        InNumTelefonicoUtente IN RICHIESTE.NumTelefonicoUtente%TYPE,
+        InProvincia IN RICHIESTE.Provincia%TYPE,
+        InCittà IN RICHIESTE.Città%TYPE,
+        InCAP IN RICHIESTE.CAP%TYPE,
+        InVia IN RICHIESTE.Via%TYPE,
+        InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
+        InData_Ora IN RICHIESTE.Data_ora%TYPE,
+        InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
+    )
+    IS
+    BEGIN
+        INSERT INTO SEGNALAZIONI VALUES(codSeg_seq.NEXTVAL, InTipologiaEmergenza);
+        INSERT INTO RICHIESTE VALUES(InNumTelefonicoUtente, codSeg_seq.CURRVAL,
+                    InProvincia, InCittà, InCAP, InVia, InNumeroCivico, InData_Ora);
+    END;
+
+-----------------------------------
+
     PROCEDURE informazioni_segnalazione(
         InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
         OutProvincia OUT RICHIESTE.Provincia%TYPE,
