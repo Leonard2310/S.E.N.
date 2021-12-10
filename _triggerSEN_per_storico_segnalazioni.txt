@@ -16,21 +16,19 @@ CREATE OR REPLACE TRIGGER CONSERVA_SEGNALAZIONI
         tCAP RICHIESTE.CAP%TYPE; 
         tData_Ora RICHIESTE.Data_Ora%TYPE;
     
-        cursor t_set IS SELECT 	U.NumeroDiTelefono, U.Nome, U.Cognome,
-                                S.Codice, S.TipologiaEmergenza,
+        cursor t_set IS SELECT 	S.Codice, S.TipologiaEmergenza,
                                 R.Via, R.NumeroCivico, R.Città, R.Provincia, R.CAP, R.Data_Ora
-        FROM UTENTI U,  SEGNALAZIONI S, RICHIESTE R
-        WHERE 	R.NumTelefonicoUtente=U.NumeroDiTelefono AND
-                R.NumTelefonicoUtente=:old.NumeroDiTelefono AND 	
+        FROM    SEGNALAZIONI S, RICHIESTE R
+        WHERE 	R.NumTelefonicoUtente=:old.NumeroDiTelefono AND 	
                 S.Codice=R.CodSegnalazione; 
     BEGIN 
         OPEN t_set; 
         LOOP 
-            FETCH t_set INTO    tNumeroDiTelefono, tNome, tCognome,
-                                tCodice, tTipologiaEmergenza,
+            FETCH t_set INTO    tCodice, tTipologiaEmergenza,
                                 tVia, tNumeroCivico, tCittà, tProvincia, tCAP, tData_Ora;
+            EXIT WHEN t_set%NOTFOUND;
             INSERT INTO STORICO_SEGNALAZIONI
-            VALUES( tNumeroDiTelefono, tNome, tCognome, tCodice, tTipologiaEmergenza, tVia, 
+            VALUES( :OLD.NumeroDiTelefono, :OLD.Nome, :OLD.Cognome, tCodice, tTipologiaEmergenza, tVia, 
                     tNumeroCivico, tCittà, tProvincia, tCAP, tData_Ora); 
         END LOOP; 
         CLOSE t_set; 
