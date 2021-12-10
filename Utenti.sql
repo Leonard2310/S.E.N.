@@ -272,12 +272,32 @@ ALTER TABLE COMPETENZE
 -- Dopo ogni singola esecuzione degli EXEC, apparirà nell'output screen "Procedura PL/SQL completata correttamente."
 SET SERVEROUT ON;
 
-EXEC PACK_SEN.valori_iniziali_operatori;
-
+EXEC PACK_SEN.valori_iniziali_utenti;
 EXEC PACK_SEN.stampa_utenti;
 
+EXEC PACK_SEN.insert_utente(3230001111, 'Pippo', 'Baudo', 'NA', 'Napoli', 80137, 'Via Verdi', 13);
+EXEC PACK_SEN.insert_utente(3234441111, 'Mike', 'Bongiorno', 'PA', 'Palermo', 90121, 'Piazza Mozart', 112);
+EXEC PACK_SEN.stampa_utenti;
+
+INSERT INTO UTENTI VALUES(3990001234, 'Carlo', 'Conti', 'FI', 'Firenze', 50122, 'Viale Bach', 2);
+EXEC PACK_SEN.stampa_utenti;
+
+EXEC PACK_SEN.delete_utente(3234441111); -- Rimuovo Mike Bongiorno
+EXEC PACK_SEN.stampa_utenti;
+
+
+
+EXEC PACK_SEN.valori_iniziali_dipartimenti;
 EXEC PACK_SEN.stampa_dipartimenti;
 
+EXEC PACK_SEN.insert_dipartimento(113, 'Polizia di Stato', 40, 'BO', 'Bologna', 40121, 'Corso Navona', 1);
+EXEC PACK_SEN.stampa_dipartimenti;
+
+
+EXEC PACK_SEN.valori_iniziali_operatori;
+EXEC PACK_SEN.stampa_operatori;
+
+EXEC PACK_SEN.insert_operatore('Carla', 'Fracci', 'Ragioneria', 5, 'Ragioniere');
 EXEC PACK_SEN.stampa_operatori;
 
 -- TODO FUNZIONE NEL PACKAGE DI INSERIMENTO DELLE RICHIESTE
@@ -340,4 +360,4 @@ DROP TABLE STORICO_SEGNALAZIONI;
 
 -- Eliminazione del package
 -- Dopo l'esecuzione, apparirà nell'output screen "Package PACK_SEN eliminato."
-DROP PACKAGE PACK_SEN;
+-- DROP PACKAGE PACK_SEN;

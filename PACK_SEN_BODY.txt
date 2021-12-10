@@ -68,31 +68,40 @@ create or replace PACKAGE BODY PACK_SEN IS
 
 -----------------------------------   
 
+    PROCEDURE delete_utente(
+        InNumeroDiTelefono IN NUMBER
+    )
+    IS
+    BEGIN
+        DELETE FROM UTENTI WHERE NumeroDiTelefono = InNumeroDiTelefono;
+    END;
+
+-----------------------------------   
     PROCEDURE valori_iniziali_dipartimenti
     IS
     BEGIN
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 115, 'Vigili del Fuoco', 
-                                    50, 0,
+                                    0, 50, 
                                     'NA', 'Napoli', 80100, 
                                     'Largo Tarantini', 1);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 118, 'Pronto Soccorso', 
-                                    70, 0,
+                                    0, 70, 
                                     'TO', 'Torino', 10126, 
                                     'Corso Bramante', 88);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 113, 'Polizia di Stato', 
-                                    50, 0,
+                                    0, 50,
                                     'MI', 'Milano', 20121, 
                                     'Via Fatebenefratelli', 11);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Arma dei Carabinieri', 
-                                    40, 0,
+                                    0, 40,
                                     'BA', 'Bari', 70121, 
                                     'Largo Tarantini', '1');
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 117, 'Guardia di Finanza', 
-                                    40, 0,
+                                    0, 40,
                                     'RM', 'Roma', 00162, 
                                     'Viale XXI Aprile', 51);
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Esercito', 
-                                    30, 0, 
+                                    0, 30,
                                     'PA', 'Palermo', 90134, 
                                     'Piazza del Parlamento', 5);
     END;
@@ -112,7 +121,7 @@ create or replace PACKAGE BODY PACK_SEN IS
     IS
     BEGIN
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, InNumeroEmergenza, InTipologia,
-                                InNumeroVeicoli, 0,
+                                0, InNumeroVeicoli, 
                                 InProvincia, InCittà, InCAP, 
                                 InVia, InNumeroCivico);
     END;

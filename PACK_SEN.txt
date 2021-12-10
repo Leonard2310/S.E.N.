@@ -24,6 +24,11 @@ IS
 
 -----------------------------------  
 
+    PROCEDURE delete_utente(
+        InNumeroDiTelefono IN NUMBER
+    );
+
+----------------------------------- 
     PROCEDURE valori_iniziali_dipartimenti;
 
 -----------------------------------   
