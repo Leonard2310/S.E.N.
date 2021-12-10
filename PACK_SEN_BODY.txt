@@ -151,25 +151,27 @@ create or replace PACKAGE BODY PACK_SEN IS
    IS
    BEGIN
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Pietro', 'Tornindietro',
-                                    1, 'Pompiere');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Motorie');
+                                    'Scienze Motorie', 1,
+                                    'Pompiere');
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Maria', 'Salvarezza',
-                                    2, 'Infermiere');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Infermieristica');
+                                    'Infermieristica', 2,
+                                    'Infermiere');
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Federica', 'Varlese',
-                                    3, 'Poliziotto');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Diploma scuola secondaria di secondo grado');
+                                    'Diploma scuola secondaria di secondo grado', 3,
+                                    'Poliziotto');
        -- Operatore con due titoli di studio
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Fabio', 'Cristalli',
-                                    4, 'Carabiniere');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Perito Agrario');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Lettere');
+                                    'Perito Agrario', 4,
+                                    'Carabiniere');
+           /*INSERT INTO OPERATORI VALUES(idOpe_seq.CURRVAL,'Fabio', 'Cristalli',
+                                    'Lettere', 4,
+                                    'Carabiniere');*/
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Umberto', 'Pirozzi',
-                                    5, 'Maresciallo di Finanza');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Politiche');
+                                    'Scienze Politiche', 5,
+                                    'Maresciallo di Finanza');
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Vittorio', 'Solombrino',
-                                    6, 'Artificiere');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Ingegneria meccanica');                                    
+                                    'Ingegnere meccanico', 6,
+                                    'Artificiere');
     END;
 
 -----------------------------------   
@@ -177,15 +179,14 @@ create or replace PACKAGE BODY PACK_SEN IS
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
         InCognome IN VARCHAR2,
-        InIDDip IN NUMBER,
-        InRuolo IN VARCHAR2,
-        InSpecTitolo IN VARCHAR2
+        InSpecTitolo VARCHAR2,
+        InIDDip NUMBER,
+        InRuolo IN VARCHAR2
     )
     IS
     BEGIN
         INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, InNome, InCognome,
-                                     InIDDip, InRuolo);
-        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, InSpecTitolo);
+                                InSpecTitolo, InIDDip, InRuolo);
     END;
 
 -----------------------------------
@@ -195,9 +196,20 @@ create or replace PACKAGE BODY PACK_SEN IS
         InSpecTitolo IN VARCHAR2
     )
     IS
-        
+        CURSOR cursore IS SELECT * FROM OPERATORI;
+        record cursore%ROWTYPE;
     BEGIN
-        INSERT INTO COMPETENZE VALUES(InIDOpe, InSpecTitolo);
+        OPEN cursore;
+        LOOP
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;
+            IF(record.ID=InIDOpe)
+            THEN
+                INSERT INTO OPERATORI VALUES(InIDOpe, record.Nome, record.Cognome, 
+                            InSpecTitolo, record.IDDip, record.Ruolo);
+            END IF;
+        END LOOP;
+        CLOSE cursore;
     END;
 
 -----------------------------------   
@@ -218,6 +230,7 @@ create or replace PACKAGE BODY PACK_SEN IS
                         ' ID '               || record.ID           ||
                         ' Nome '             || record.Nome         ||
                         ' Cognome '          || record.Cognome      ||
+                        ' SpecTitolo '       || record.SpecTitolo   ||
                         ' IDDip '            || record.IDDip        ||
                         ' Ruolo '            || record.Ruolo        
                         ); 
@@ -225,7 +238,7 @@ create or replace PACKAGE BODY PACK_SEN IS
         CLOSE cursore;
     END;
 
------------------------------------ 
+-----------------------------------   
 
     PROCEDURE valori_iniziali
     IS 
