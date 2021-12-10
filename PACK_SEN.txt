@@ -4,9 +4,9 @@ IS
 -- ***** PROCEDURES *****
 
     PROCEDURE valori_iniziali_utenti;
-    
+
 -----------------------------------   
-    
+
     PROCEDURE insert_utente(
         InNumeroDiTelefono IN NUMBER,
         InNome IN VARCHAR2,
@@ -17,7 +17,7 @@ IS
         InVia IN VARCHAR2,
         InNumeroCivico IN NUMBER
     );
-    
+
 -----------------------------------   
 
     PROCEDURE stampa_utenti;
@@ -25,9 +25,9 @@ IS
 -----------------------------------  
 
     PROCEDURE valori_iniziali_dipartimenti;
-    
+
 -----------------------------------   
-    
+
     PROCEDURE insert_dipartimento(
         InNumeroEmergenza IN NUMBER,
         InTipologia IN VARCHAR2,
@@ -46,9 +46,9 @@ IS
 ----------------------------------- 
 
     PROCEDURE valori_iniziali_operatori;
-    
+
 -----------------------------------   
-    
+
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
         InCognome IN VARCHAR2,
@@ -71,9 +71,9 @@ IS
 -----------------------------------
 
     PROCEDURE valori_iniziali;
-    
+
 -----------------------------------
-    
+
     PROCEDURE informazioni_segnalazione(
         InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
         OutProvincia OUT RICHIESTE.Provincia%TYPE,
@@ -86,5 +86,12 @@ IS
     );
 
 -----------------------------------
-    
+
+    PROCEDURE insert_coinvolgimento(
+        InIDDip IN COINVOLGIMENTI.IDDip%TYPE,
+        InCodSegnalazione IN COINVOLGIMENTI.CodSegnalazione%TYPE
+    );
+
+-----------------------------------
+
 END PACK_SEN;

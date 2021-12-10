@@ -1,5 +1,4 @@
-CREATE OR REPLACE 
-PACKAGE BODY PACK_SEN IS
+create or replace PACKAGE BODY PACK_SEN IS
 
     -- PROCEDURES
     PROCEDURE valori_iniziali_utenti 
@@ -18,9 +17,9 @@ PACKAGE BODY PACK_SEN IS
                                     'RM', 'Tivoli', 00019, 
                                     'Via Napoli', 7);
     END;
-    
+
 -----------------------------------   
-    
+
     PROCEDURE insert_utente(
         InNumeroDiTelefono IN NUMBER,
         InNome IN VARCHAR2,
@@ -37,7 +36,7 @@ PACKAGE BODY PACK_SEN IS
                                 InProvincia, InCittà, InCAP,
                                 InVia, InNumeroCivico);
     END;
-    
+
 -----------------------------------   
 
     PROCEDURE stampa_utenti
@@ -96,9 +95,9 @@ PACKAGE BODY PACK_SEN IS
                                     'PA', 'Palermo', 90134, 
                                     'Piazza del Parlamento', 5);
     END;
-    
+
 -----------------------------------   
-    
+
     PROCEDURE insert_dipartimento(
         InNumeroEmergenza IN NUMBER,
         InTipologia IN VARCHAR2,
@@ -151,32 +150,32 @@ PACKAGE BODY PACK_SEN IS
    PROCEDURE valori_iniziali_operatori
    IS
    BEGIN
-       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Pietro', 'Tornindietro',
+       INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Pietro', 'Tornindietro',
                                     'Scienze Motorie', 1,
                                     'Pompiere');
-       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Maria', 'Salvarezza',
+       INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Maria', 'Salvarezza',
                                     'Infermieristica', 2,
                                     'Infermiere');
-       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Federica', 'Varlese',
+       INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Federica', 'Varlese',
                                     'Diploma scuola secondaria di secondo grado', 3,
                                     'Poliziotto');
        -- Operatore con due titoli di studio
-       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Fabio', 'Cristalli',
+       INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Fabio', 'Cristalli',
                                     'Perito Agrario', 4,
                                     'Carabiniere');
-           INSERT INTO OPERATORI VALUES(idDip_seq.CURRVAL,'Fabio', 'Cristalli',
+           /*INSERT INTO OPERATORI VALUES(idOpe_seq.CURRVAL,'Fabio', 'Cristalli',
                                     'Lettere', 4,
-                                    'Carabiniere');
-       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Umberto', 'Pirozzi',
+                                    'Carabiniere');*/
+       INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Umberto', 'Pirozzi',
                                     'Scienze Politiche', 5,
                                     'Maresciallo di Finanza');
-       INSERT INTO OPERATORI VALUES(idDip_seq.NEXTVAL, 'Vittorio', 'Solombrino',
+       INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Vittorio', 'Solombrino',
                                     'Ingegnere meccanico', 6,
                                     'Artificiere');
     END;
-  
+
 -----------------------------------   
-    
+
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
         InCognome IN VARCHAR2,
@@ -238,7 +237,7 @@ PACKAGE BODY PACK_SEN IS
             END LOOP; 
         CLOSE cursore;
     END;
-    
+
 -----------------------------------   
 
     PROCEDURE valori_iniziali
@@ -261,14 +260,13 @@ PACKAGE BODY PACK_SEN IS
         OutData_Ora OUT RICHIESTE.Data_ora%TYPE,
         OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE)
     IS
-    
     BEGIN
         SELECT R.Provincia, R.Città, R.CAP, R.Via, R.NumeroCivico, R.Data_Ora, S.TipologiaEmergenza
         INTO OutProvincia, OutCittà, OutCAP, OutVia, OutNumeroCivico, OutData_Ora, OutTipologiaEmergenza
         FROM RICHIESTE R
         JOIN SEGNALAZIONI S
         ON S.Codice = InCodiceSegnalazione AND S.Codice = R.CodSegnalazione;
-    
+
         -- stampa risultato del join
         DBMS_OUTPUT.PUT_LINE('INFORMAZIONI RELATIVE ALLA SEGNALAZIONE NUMERO ' || InCodiceSegnalazione || ':');
         DBMS_OUTPUT.PUT_LINE('Provincia = ' || OutProvincia);
@@ -279,5 +277,20 @@ PACKAGE BODY PACK_SEN IS
         DBMS_OUTPUT.PUT_LINE('Data_Ora = ' || OutData_Ora);
         DBMS_OUTPUT.PUT_LINE('TipologiaEmergenza = ' || OutTipologiaEmergenza);
     END;
-  
+
+
+
+-----------------------------------
+
+    PROCEDURE insert_coinvolgimento(
+        InIDDip IN COINVOLGIMENTI.IDDip%TYPE,
+        InCodSegnalazione IN COINVOLGIMENTI.CodSegnalazione%TYPE
+    )
+    IS
+    BEGIN
+        INSERT INTO COINVOLGIMENTI VALUES (InIDDip, InCodSegnalazione);
+    END;
+    
+-----------------------------------
+    
 END PACK_SEN;
