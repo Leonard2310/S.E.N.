@@ -64,10 +64,17 @@ STORAGE(INITIAL 1160k NEXT 580k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
 CREATE TABLE SEGNALAZIONI(
     Codice NUMBER(10),
     TipologiaEmergenza VARCHAR2(30) NOT NULL,
+    NumTelefonicoUtente NUMBER(10),
+    Provincia CHAR(2) NOT NULL,
+    Città VARCHAR2(35) NOT NULL,
+    CAP NUMBER(5),
+    Via VARCHAR2(35) NOT NULL,
+    NumeroCivico NUMBER(5),
+    Data_Ora TIMESTAMP(0) NOT NULL,
 
     CONSTRAINT PK_SEGNALAZIONI PRIMARY KEY(Codice)
 )
-STORAGE(INITIAL 370k NEXT 185k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
+STORAGE(INITIAL 1330k NEXT 665k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
 
 -- 3) Tabella dipartimenti
 CREATE TABLE DIPARTIMENTI(
@@ -119,22 +126,7 @@ CREATE TABLE COMPETENZE(
 )
 STORAGE(INITIAL 207k NEXT 50k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
 
--- 7) Tabella richieste
-CREATE TABLE RICHIESTE(
-    NumTelefonicoUtente NUMBER(10),
-    CodSegnalazione NUMBER(10),
-    Provincia CHAR(2) NOT NULL,
-    Città VARCHAR2(35) NOT NULL,
-    CAP NUMBER(5),
-    Via VARCHAR2(35) NOT NULL,
-    NumeroCivico NUMBER(5),
-    Data_Ora TIMESTAMP(0) NOT NULL,
-
-    CONSTRAINT PK_RICHIESTE PRIMARY KEY(NumTelefonicoUtente, CodSegnalazione)
-)
-STORAGE(INITIAL 1030k NEXT 515k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
-
--- 8) Tabella coinvolgimenti
+-- 7) Tabella coinvolgimenti
 CREATE TABLE COINVOLGIMENTI(
     IDDip NUMBER(4),
     CodSegnalazione NUMBER(10),
@@ -143,8 +135,7 @@ CREATE TABLE COINVOLGIMENTI(
 )
 STORAGE(INITIAL 110k NEXT 55k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
 
-
--- 9) Tabella storico_segnalazioni
+-- 8) Tabella storico_segnalazioni
 CREATE TABLE STORICO_SEGNALAZIONI (
     Codice NUMBER(10),
     NumeroDiTelefono NUMBER(10),
@@ -157,7 +148,7 @@ CREATE TABLE STORICO_SEGNALAZIONI (
     Via VARCHAR2(35),
     NumeroCivico NUMBER(5),
     Data_Ora TIMESTAMP(0),
-    
+
     CONSTRAINT PK_STORICO_SEGNALAZIONI PRIMARY KEY(Codice)
 )
 STORAGE(INITIAL 1560k NEXT 3120k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
@@ -167,7 +158,6 @@ STORAGE(INITIAL 1560k NEXT 3120k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
 -- Ruolo utente e relativi privilegi
 CREATE ROLE utente;                                      -- creazione del ruolo
 GRANT CONNECT TO utente;                                 -- attribuzione dei privilegi
-GRANT INSERT                 ON sen.RICHIESTE TO utente; -- attribuzione dei privilegi
 GRANT INSERT, UPDATE, DELETE ON sen.UTENTI TO utente;    -- attribuzione dei privilegi
 -- Dopo ogni singolo GRANT, apparirà nell'output screen "Grant riuscito/a."
 
@@ -183,7 +173,6 @@ GRANT INSERT, UPDATE, DELETE ON sen.COMPETENZE  TO amm_dipartimento;
 CREATE ROLE centralinista;
 GRANT CONNECT TO centralinista;
 GRANT SELECT                 ON sen.SEGNALAZIONI   TO centralinista;
-GRANT SELECT                 ON sen.RICHIESTE      TO centralinista;
 GRANT INSERT, UPDATE, DELETE ON sen.COINVOLGIMENTI TO centralinista;
 
 
@@ -222,12 +211,11 @@ CREATE SEQUENCE idOpe_seq
 -- Aggiunta delle chiavi esterne
 /* Si aggiungono le seguenti chiavi esterne:
  * 1- IDDip:DIPARTIMENTI per OPERATORI;
- * 2- NumTelefonicoUtente:UTENTI per RICHIESTE;
- * 3- CodSegnalazione:SEGNALAZIONI per RICHIESTE;
- * 4- IDDip:DIPARTIMENTI per COINVOLGIMENTI;
- * 5- CodSegnalazione:SEGNALAZIONI per COINVOLGIMENTI;
- * 6- IDOpe:OPERATORI per COMPETENZE;
- * 7- SpecTitolo:TITOLIDISTUDI per COMPETENZE.
+ * 2- NumTelefonicoUtente:UTENTI per SEGNALAZIONI;
+ * 3- IDDip:DIPARTIMENTI per COINVOLGIMENTI;
+ * 4- CodSegnalazione:SEGNALAZIONI per COINVOLGIMENTI;
+ * 5- IDOpe:OPERATORI per COMPETENZE;
+ * 6- SpecTitolo:TITOLIDISTUDI per COMPETENZE.
  */
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_table> modificato."
 ALTER TABLE OPERATORI
@@ -235,15 +223,10 @@ ALTER TABLE OPERATORI
     REFERENCES DIPARTIMENTI(ID);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Dipartimenti.
 
-ALTER TABLE RICHIESTE
-    ADD CONSTRAINT FK_RIC_UTE FOREIGN KEY (NumTelefonicoUtente)
+ALTER TABLE SEGNALAZIONI
+    ADD CONSTRAINT FK_SEG_UTE FOREIGN KEY (NumTelefonicoUtente)
     REFERENCES UTENTI(NumeroDiTelefono);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Utenti.
-
-ALTER TABLE RICHIESTE
-    ADD CONSTRAINT FK_RIC_SEG FOREIGN KEY (CodSegnalazione)
-    REFERENCES SEGNALAZIONI(Codice);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
 
 ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_DIP FOREIGN KEY (IDDip)
@@ -253,7 +236,7 @@ ALTER TABLE COINVOLGIMENTI
 ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_SEG FOREIGN KEY (CodSegnalazione)
     REFERENCES SEGNALAZIONI(Codice);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
+    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.   
 
 ALTER TABLE COMPETENZE
     ADD CONSTRAINT FK_COM_OPE FOREIGN KEY (IDOpe)
@@ -284,7 +267,7 @@ INSERT INTO UTENTI VALUES(3990001234, 'Carlo', 'Conti', 'FI', 'Firenze', 50122, 
 EXEC PACK_SEN.stampa_utenti;
 
 -- Rimuovo Mike Bongiorno
-EXEC PACK_SEN.delete_utente(3234441111); 
+EXEC PACK_SEN.delete_utente(3234441111);
 EXEC PACK_SEN.stampa_utenti;
 
 
@@ -296,7 +279,7 @@ EXEC PACK_SEN.insert_dipartimento(113, 'Polizia di Stato', 40, 'BO', 'Bologna', 
 EXEC PACK_SEN.stampa_dipartimenti;
 
 -- Rimuovo Polizia di Stato di Bologna, ID=7
-EXEC PACK_SEN.delete_dipartimento(7); 
+EXEC PACK_SEN.delete_dipartimento(7);
 EXEC PACK_SEN.stampa_dipartimenti;
 
 ----- TITOLI DI STUDI
@@ -327,11 +310,9 @@ DROP SEQUENCE idOpe_seq;
 
 -- Revocazione dei privilegi
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Revoke riuscito/a."
-REVOKE INSERT                 ON sen.RICHIESTE      FROM utente;
 REVOKE INSERT, UPDATE, DELETE ON sen.DIPARTIMENTI   FROM amm_dipartimento;
 REVOKE INSERT, UPDATE, DELETE ON sen.OPERATORI      FROM amm_dipartimento;
 REVOKE SELECT                 ON sen.SEGNALAZIONI   FROM centralinista;
-REVOKE SELECT                 ON sen.RICHIESTE      FROM centralinista;
 REVOKE INSERT, UPDATE, DELETE ON sen.UTENTI         FROM utente;
 REVOKE INSERT, UPDATE, DELETE ON sen.COINVOLGIMENTI FROM centralinista;
 REVOKE INSERT, UPDATE, DELETE ON sen.TITOLIDISTUDI  FROM amm_dipartimento;
@@ -348,8 +329,6 @@ DROP ROLE centralinista;
 -- Eliminazione dei vincoli di integrità referenziale
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_tabella> modificato."
 ALTER TABLE OPERATORI      DROP CONSTRAINT FK_OPE_SEG;
-ALTER TABLE RICHIESTE      DROP CONSTRAINT FK_RIC_UTE;
-ALTER TABLE RICHIESTE      DROP CONSTRAINT FK_RIC_SEG;
 ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_DIP;
 ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_SEG;
 ALTER TABLE COMPETENZE     DROP CONSTRAINT FK_COM_OPE;
@@ -358,7 +337,6 @@ ALTER TABLE COMPETENZE     DROP CONSTRAINT FK_COM_TIT;
 -- Eliminazione delle tabelle
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_tabella> eliminato."
 DROP TABLE OPERATORI;
-DROP TABLE RICHIESTE;
 DROP TABLE COINVOLGIMENTI;
 DROP TABLE UTENTI;
 DROP TABLE DIPARTIMENTI;
