@@ -7,7 +7,7 @@ DECLARE
     -- dichiarazione dell'eccezione
     DATA_ORA_FUTURA EXCEPTION;
 BEGIN
-    SELECT LOCALTIMESTAMP INTO data_ora_attuale FROM DUAL;
+    SELECT CURRENT_TIMESTAMP INTO data_ora_attuale FROM DUAL;
     IF (data_ora_attuale < :NEW.Data_Ora)
     THEN
         RAISE DATA_ORA_FUTURA;
