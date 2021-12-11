@@ -267,6 +267,8 @@ EXEC PACK_SEN.insert_utente(3234441111, 'Mike', 'Bongiorno', 'PA', 'Palermo', 90
 EXEC PACK_SEN.stampa_utenti;
 
 INSERT INTO UTENTI VALUES(3990001234, 'Carlo', 'Conti', 'FI', 'Firenze', 50122, 'Viale Bach', 2);
+-- Cambiamone il civico
+UPDATE UTENTI SET UTENTI.NumeroCivico=4 WHERE (NumeroDiTelefono=3990001234);
 EXEC PACK_SEN.stampa_utenti;
 
 -- Rimuovo Mike Bongiorno
@@ -285,10 +287,6 @@ EXEC PACK_SEN.stampa_dipartimenti;
 EXEC PACK_SEN.delete_dipartimento(7);
 EXEC PACK_SEN.stampa_dipartimenti;
 
------ TITOLI DI STUDI
---EXEC PACK_SEN.valori_iniziali_titoli;
-
-
 ----- OPERATORI
 EXEC PACK_SEN.valori_iniziali_operatori;
 EXEC PACK_SEN.stampa_operatori;
@@ -299,12 +297,43 @@ INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Politiche');
 EXEC PACK_SEN.stampa_operatori;
 EXEC PACK_SEN.stampa_dipartimenti;
 
+EXEC PACK_SEN.delete_operatore(idOpe_seq.CURRVAL);
+EXEC PACK_SEN.stampa_operatori;
+EXEC PACK_SEN.stampa_dipartimenti;
+
+-- Tutti gli operatori del dipartimento con ID=1 passano in quello con ID=2
+UPDATE OPERATORI SET OPERATORI.IDDip=2 WHERE (IDDip=1);
+EXEC PACK_SEN.stampa_operatori;
+EXEC PACK_SEN.stampa_dipartimenti;
+
+----- STAMPA TITOLI
+EXEC PACK_SEN.stampa_titoli;
+-- Verifichiamo il titolo di studi. Inseriamo un altro laureato in lettere: non sarà nuovamente aggiunto
+EXEC PACK_SEN.insert_operatore('Roberto', 'Bolle', 'Lettere', 3, 'Sovrintendente');
 EXEC PACK_SEN.stampa_titoli;
 
+----- STAMPA COMPETENZE
+EXEC PACK_SEN.stampa_competenze;
+
+----- SEGNALAZIONI
 -- Inseriamo una segnalazione: furto a casa di Pippo Baudo
 EXEC PACK_SEN.insert_segnalazione(3230001111, 'Furto', 'NA', 'Napoli', 80137, 'Via Verdi', 13, CURRENT_TIMESTAMP);
+EXEC PACK_SEN.stampa_segnalazioni;
+-- Inseriamo una seconda segnalazione: incendio segnalato da Carlo Conti
+EXEC PACK_SEN.insert_segnalazione(3990001234, 'Incendio', 'FI', 'Firenze', 50122, 'Via Escher', 212, CURRENT_TIMESTAMP);
+EXEC PACK_SEN.stampa_segnalazioni;
+-- Inseriamo una segnalazione in data futura
+EXEC PACK_SEN.insert_segnalazione(3990001234, 'Incidente', 'TA', 'Taranto', 74121, 'Largo Caravaggio', 7, '11-DIC-22 21:09:09');
+-- Verrà giustamente dato un errore!
 
-
+----- STORICO SEGNALAZIONI
+-- Inizialmente vuoto
+EXEC PACK_SEN.stampa_storico;
+-- Rimuoviamo l'utente Carlo Conti
+EXEC PACK_SEN.delete_utente(3990001234);
+EXEC PACK_SEN.stampa_storico;
+-- Mostriamo gli utenti rimanenti sottoforma di tabella
+SELECT * FROM UTENTI;
 --------------------------------------------------------------------------------
 
 

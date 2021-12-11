@@ -231,21 +231,6 @@ create or replace PACKAGE BODY PACK_SEN IS
     END;
 
 -----------------------------------
- /*
-    PROCEDURE valori_iniziali_titoli
-    IS
-    BEGIN
-        INSERT INTO TITOLIDISTUDI VALUES('Diploma scuola secondaria di secondo grado');
-        INSERT INTO TITOLIDISTUDI VALUES('Scienze Motorie');
-        INSERT INTO TITOLIDISTUDI VALUES('Infermieristica');
-        INSERT INTO TITOLIDISTUDI VALUES('Perito Agrario');
-        INSERT INTO TITOLIDISTUDI VALUES('Lettere');
-        INSERT INTO TITOLIDISTUDI VALUES('Scienze Politiche');
-        INSERT INTO TITOLIDISTUDI VALUES('Ingegneria Meccanica');
-        INSERT INTO TITOLIDISTUDI VALUES('Ragioneria');
-    END;
-   */
------------------------------------
 
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
@@ -300,7 +285,7 @@ create or replace PACKAGE BODY PACK_SEN IS
             DBMS_OUTPUT.PUT_LINE('  ID: '               || record.ID);
             DBMS_OUTPUT.PUT_LINE('  Nome: '             || record.Nome);
             DBMS_OUTPUT.PUT_LINE('  Cognome: '          || record.Cognome);
-            DBMS_OUTPUT.PUT_LINE('  ID dipartimento: '            || record.IDDip);
+            DBMS_OUTPUT.PUT_LINE('  ID dipartimento: '  || record.IDDip);
             DBMS_OUTPUT.PUT_LINE('  Ruolo: '            || record.Ruolo);
             DBMS_OUTPUT.PUT_LINE('');
             END LOOP;
@@ -429,6 +414,109 @@ create or replace PACKAGE BODY PACK_SEN IS
     IS
     BEGIN
         INSERT INTO COINVOLGIMENTI VALUES (InIDDip, InCodSegnalazione);
+    END;
+
+-----------------------------------
+    
+    PROCEDURE stampa_titoli
+    IS
+        CURSOR cursore IS SELECT * FROM TITOLIDISTUDI;
+        record cursore%ROWTYPE;
+        counter number:=0;
+    BEGIN
+        OPEN cursore;
+        DBMS_OUTPUT.PUT_LINE('Tabella TITOLIDISTUDI');
+        LOOP
+            counter := counter + 1;
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;
+            DBMS_OUTPUT.PUT_LINE('Riga n# '             || counter);
+            DBMS_OUTPUT.PUT_LINE('  Specializzazione: ' || record.Specializzazione);
+            DBMS_OUTPUT.PUT_LINE('');
+            END LOOP;
+        CLOSE cursore;
+    END;
+    
+-----------------------------------    
+
+    PROCEDURE stampa_segnalazioni
+    IS
+        CURSOR cursore IS SELECT * FROM SEGNALAZIONI;
+        record cursore%ROWTYPE;
+        counter number:=0;
+    BEGIN
+        OPEN cursore;
+        DBMS_OUTPUT.PUT_LINE('Tabella SEGNALAZIONI');
+        LOOP
+            counter := counter + 1;
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;
+                DBMS_OUTPUT.PUT_LINE('Riga n# '                 || counter);
+            DBMS_OUTPUT.PUT_LINE('  Codice: '                   || record.Codice);
+            DBMS_OUTPUT.PUT_LINE('  Tipologia emergenza: '      || record.TipologiaEmergenza);
+            DBMS_OUTPUT.PUT_LINE('  Numero telefonico utente: ' || record.NumTelefonicoUtente);
+            DBMS_OUTPUT.PUT_LINE('  Provincia: '                || record.Provincia);
+            DBMS_OUTPUT.PUT_LINE('  Città: '                    || record.Città);
+            DBMS_OUTPUT.PUT_LINE('  CAP: '                      || record.CAP);
+            DBMS_OUTPUT.PUT_LINE('  Via: '                      || record.Via);
+            DBMS_OUTPUT.PUT_LINE('  Numero civico: '            || record.NumeroCivico);
+            DBMS_OUTPUT.PUT_LINE('  Data e ora: '               || record.Data_Ora);
+            DBMS_OUTPUT.PUT_LINE('');
+            END LOOP;
+        CLOSE cursore;
+    END;
+
+----------------------------------- 
+
+    PROCEDURE stampa_storico
+    IS
+        CURSOR cursore IS SELECT * FROM STORICO_SEGNALAZIONI;
+        record cursore%ROWTYPE;
+        counter number:=0;
+    BEGIN
+        OPEN cursore;
+        DBMS_OUTPUT.PUT_LINE('Tabella STORICO_SEGNALAZIONI');
+        LOOP
+            counter := counter + 1;
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;
+                DBMS_OUTPUT.PUT_LINE('Riga n# '                 || counter);
+            DBMS_OUTPUT.PUT_LINE('  Codice: '                   || record.Codice);
+            DBMS_OUTPUT.PUT_LINE('  Numero telefonico utente: ' || record.NumeroDiTelefono);
+            DBMS_OUTPUT.PUT_LINE('  Nome: '                     || record.Nome);
+            DBMS_OUTPUT.PUT_LINE('  Cognome: '                  || record.Cognome);
+            DBMS_OUTPUT.PUT_LINE('  Tipologia emergenza: '      || record.TipologiaEmergenza);
+            DBMS_OUTPUT.PUT_LINE('  Provincia emergenza: '      || record.Provincia);    
+            DBMS_OUTPUT.PUT_LINE('  Città emergenza: '          || record.Città);
+            DBMS_OUTPUT.PUT_LINE('  CAP emergenza: '            || record.CAP);
+            DBMS_OUTPUT.PUT_LINE('  Via emergenza: '            || record.Via);
+            DBMS_OUTPUT.PUT_LINE('  Numero civico emergenza: '  || record.NumeroCivico);
+            DBMS_OUTPUT.PUT_LINE('  Data e ora emergenza: '     || record.Data_Ora);
+            DBMS_OUTPUT.PUT_LINE('');
+            END LOOP;
+        CLOSE cursore;
+    END;
+
+-----------------------------------
+
+    PROCEDURE stampa_competenze
+    IS
+        CURSOR cursore IS SELECT * FROM COMPETENZE;
+        record cursore%ROWTYPE;
+        counter number:=0;
+    BEGIN
+        OPEN cursore;
+        DBMS_OUTPUT.PUT_LINE('Tabella COMPETENZE');
+        LOOP
+            counter := counter + 1;
+            FETCH cursore INTO record;
+            EXIT WHEN cursore%NOTFOUND;
+                DBMS_OUTPUT.PUT_LINE('Riga n# '        || counter);
+            DBMS_OUTPUT.PUT_LINE('  ID operatore: '    || record.IDOpe);
+            DBMS_OUTPUT.PUT_LINE('  Titolo di studi: ' || record.SpecTitolo);
+            DBMS_OUTPUT.PUT_LINE('');
+            END LOOP;
+        CLOSE cursore;
     END;
 
 -----------------------------------
