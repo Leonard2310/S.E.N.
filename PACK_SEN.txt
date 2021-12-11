@@ -1,11 +1,11 @@
-create or replace PACKAGE PACK_SEN 
-IS 
+create or replace PACKAGE PACK_SEN
+IS
 
 -- ***** PROCEDURES *****
 
     PROCEDURE valori_iniziali_utenti;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE insert_utente(
         InNumeroDiTelefono IN NUMBER,
@@ -18,21 +18,21 @@ IS
         InNumeroCivico IN NUMBER
     );
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE stampa_utenti;
 
------------------------------------  
+-----------------------------------
 
     PROCEDURE delete_utente(
         InNumeroDiTelefono IN NUMBER
     );
 
------------------------------------ 
+-----------------------------------
 
     PROCEDURE valori_iniziali_dipartimenti;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE insert_dipartimento(
         InNumeroEmergenza IN NUMBER,
@@ -45,25 +45,25 @@ IS
         InNumeroCivico IN NUMBER
     );
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE stampa_dipartimenti;
 
------------------------------------ 
+-----------------------------------
 
     PROCEDURE delete_dipartimento(
         InID IN NUMBER
     );
-    
------------------------------------  
- 
-    --PROCEDURE valori_iniziali_titoli;  
-    
------------------------------------ 
+
+-----------------------------------
+
+    --PROCEDURE valori_iniziali_titoli;
+
+-----------------------------------
 
     PROCEDURE valori_iniziali_operatori;
 
------------------------------------  
+-----------------------------------
 
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
@@ -80,7 +80,7 @@ IS
         InSpecTitolo IN VARCHAR2
     );
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE stampa_operatori;
 
@@ -90,30 +90,30 @@ IS
 
 -----------------------------------
 
-    PROCEDURE insert_richiesta_segnalazione(
-        InNumTelefonicoUtente IN RICHIESTE.NumTelefonicoUtente%TYPE,
-        InProvincia IN RICHIESTE.Provincia%TYPE,
-        InCittà IN RICHIESTE.Città%TYPE,
-        InCAP IN RICHIESTE.CAP%TYPE,
-        InVia IN RICHIESTE.Via%TYPE,
-        InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
-        InData_Ora IN RICHIESTE.Data_Ora%TYPE,
+    PROCEDURE insert_segnalazione(
+        InNumTelefonicoUtente IN SEGNALAZIONI.NumTelefonicoUtente%TYPE,
+        InProvincia IN SEGNALAZIONI.Provincia%TYPE,
+        InCittà IN SEGNALAZIONI.Città%TYPE,
+        InCAP IN SEGNALAZIONI.CAP%TYPE,
+        InVia IN SEGNALAZIONI.Via%TYPE,
+        InNumeroCivico IN SEGNALAZIONI.NumeroCivico%TYPE,
+        InData_Ora IN SEGNALAZIONI.Data_Ora%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
     );
-    
+
 -----------------------------------
 
-    PROCEDURE informazioni_segnalazione(
+     PROCEDURE informazioni_segnalazione(
         InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
-        OutProvincia OUT RICHIESTE.Provincia%TYPE,
-        OutCittà OUT RICHIESTE.Città%TYPE,
-        OutCAP OUT RICHIESTE.CAP%TYPE,
-        OutVia OUT RICHIESTE.Via%TYPE,
-        OutNumeroCivico OUT RICHIESTE.NumeroCivico%TYPE,
-        OutData_Ora OUT RICHIESTE.Data_Ora%TYPE,
-        OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE
+        OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE,
+        OutProvincia OUT SEGNALAZIONI.Provincia%TYPE,
+        OutCittà OUT SEGNALAZIONI.Città%TYPE,
+        OutCAP OUT SEGNALAZIONI.CAP%TYPE,
+        OutVia OUT SEGNALAZIONI.Via%TYPE,
+        OutNumeroCivico OUT SEGNALAZIONI.NumeroCivico%TYPE,
+        OutData_Ora OUT SEGNALAZIONI.Data_Ora%TYPE
     );
-
+    
 -----------------------------------
 
     PROCEDURE insert_coinvolgimento(

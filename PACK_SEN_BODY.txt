@@ -1,24 +1,24 @@
 create or replace PACKAGE BODY PACK_SEN IS
 
     -- PROCEDURES
-    PROCEDURE valori_iniziali_utenti 
+    PROCEDURE valori_iniziali_utenti
     IS
     BEGIN
-        INSERT INTO UTENTI VALUES(3331231231, 'Leonardo', 'Catello', 
-                                    'NA', 'San Giorgio a Cremano', 80046, 
+        INSERT INTO UTENTI VALUES(3331231231, 'Leonardo', 'Catello',
+                                    'NA', 'San Giorgio a Cremano', 80046,
                                     'Via Roma', 23);
-        INSERT INTO UTENTI VALUES(3334564564, 'Daiana', 'Cipollaro', 
-                                    'MI', 'Milano', 20019, 
-                                    'Via Torino', 1);    
-        INSERT INTO UTENTI VALUES(3662342342, 'Francesco', 'Di Serio', 
-                                    'CN', 'Cuneo', 12100, 
+        INSERT INTO UTENTI VALUES(3334564564, 'Daiana', 'Cipollaro',
+                                    'MI', 'Milano', 20019,
+                                    'Via Torino', 1);
+        INSERT INTO UTENTI VALUES(3662342342, 'Francesco', 'Di Serio',
+                                    'CN', 'Cuneo', 12100,
                                     'Via Milano', 40);
-        INSERT INTO UTENTI VALUES(3667897897, 'Ciro', 'Gallucci', 
-                                    'RM', 'Tivoli', 00019, 
+        INSERT INTO UTENTI VALUES(3667897897, 'Ciro', 'Gallucci',
+                                    'RM', 'Tivoli', 00019,
                                     'Via Napoli', 7);
     END;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE insert_utente(
         InNumeroDiTelefono IN NUMBER,
@@ -37,7 +37,7 @@ create or replace PACKAGE BODY PACK_SEN IS
                                 InVia, InNumeroCivico);
     END;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE stampa_utenti
     IS
@@ -46,27 +46,27 @@ create or replace PACKAGE BODY PACK_SEN IS
         counter number:=0;
     BEGIN
         OPEN cursore;
-        DBMS_OUTPUT.PUT_LINE('Tabella UTENTI'); 
-        LOOP 
+        DBMS_OUTPUT.PUT_LINE('Tabella UTENTI');
+        LOOP
             counter := counter + 1;
             FETCH cursore INTO record;
-            EXIT WHEN cursore%NOTFOUND;        
-            DBMS_OUTPUT.PUT_LINE('Riga n# '     || counter);                 
+            EXIT WHEN cursore%NOTFOUND;
+            DBMS_OUTPUT.PUT_LINE('Riga n# '     || counter);
             DBMS_OUTPUT.PUT_LINE('  Numero di telefono: '  || record.NumeroDiTelefono);
-            DBMS_OUTPUT.PUT_LINE('  Nome: '                || record.Nome);      
-            DBMS_OUTPUT.PUT_LINE('  Cognome: '             || record.Cognome);       
-            DBMS_OUTPUT.PUT_LINE('  Provincia: '           || record.Provincia);      
-            DBMS_OUTPUT.PUT_LINE('  Città: '               || record.Città);         
-            DBMS_OUTPUT.PUT_LINE('  CAP: '                 || record.CAP);             
-            DBMS_OUTPUT.PUT_LINE('  Via: '                 || record.Via);              
+            DBMS_OUTPUT.PUT_LINE('  Nome: '                || record.Nome);
+            DBMS_OUTPUT.PUT_LINE('  Cognome: '             || record.Cognome);
+            DBMS_OUTPUT.PUT_LINE('  Provincia: '           || record.Provincia);
+            DBMS_OUTPUT.PUT_LINE('  Città: '               || record.Città);
+            DBMS_OUTPUT.PUT_LINE('  CAP: '                 || record.CAP);
+            DBMS_OUTPUT.PUT_LINE('  Via: '                 || record.Via);
             DBMS_OUTPUT.PUT_LINE('  Numero civico: '       || record.NumeroCivico);
             DBMS_OUTPUT.PUT_LINE('');
-                     
-            END LOOP; 
+
+            END LOOP;
         CLOSE cursore;
     END;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE delete_utente(
         InNumeroDiTelefono IN NUMBER
@@ -76,38 +76,38 @@ create or replace PACKAGE BODY PACK_SEN IS
         DELETE FROM UTENTI WHERE (NumeroDiTelefono = InNumeroDiTelefono);
     END;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE valori_iniziali_dipartimenti
     IS
     BEGIN
-        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 115, 'Vigili del Fuoco', 
-                                    0, 50, 
-                                    'NA', 'Napoli', 80100, 
-                                    'Largo Tarantini', 1);
-        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 118, 'Pronto Soccorso', 
-                                    0, 70, 
-                                    'TO', 'Torino', 10126, 
-                                    'Corso Bramante', 88);
-        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 113, 'Polizia di Stato', 
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 115, 'Vigili del Fuoco',
                                     0, 50,
-                                    'MI', 'Milano', 20121, 
+                                    'NA', 'Napoli', 80100,
+                                    'Largo Tarantini', 1);
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 118, 'Pronto Soccorso',
+                                    0, 70,
+                                    'TO', 'Torino', 10126,
+                                    'Corso Bramante', 88);
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 113, 'Polizia di Stato',
+                                    0, 50,
+                                    'MI', 'Milano', 20121,
                                     'Via Fatebenefratelli', 11);
-        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Arma dei Carabinieri', 
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Arma dei Carabinieri',
                                     0, 40,
-                                    'BA', 'Bari', 70121, 
+                                    'BA', 'Bari', 70121,
                                     'Largo Tarantini', '1');
-        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 117, 'Guardia di Finanza', 
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 117, 'Guardia di Finanza',
                                     0, 40,
-                                    'RM', 'Roma', 00162, 
+                                    'RM', 'Roma', 00162,
                                     'Viale XXI Aprile', 51);
-        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Esercito', 
+        INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, 112, 'Esercito',
                                     0, 30,
-                                    'PA', 'Palermo', 90134, 
+                                    'PA', 'Palermo', 90134,
                                     'Piazza del Parlamento', 5);
     END;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE insert_dipartimento(
         InNumeroEmergenza IN NUMBER,
@@ -122,12 +122,12 @@ create or replace PACKAGE BODY PACK_SEN IS
     IS
     BEGIN
         INSERT INTO DIPARTIMENTI VALUES(idDip_seq.NEXTVAL, InNumeroEmergenza, InTipologia,
-                                0, InNumeroVeicoli, 
-                                InProvincia, InCittà, InCAP, 
+                                0, InNumeroVeicoli,
+                                InProvincia, InCittà, InCAP,
                                 InVia, InNumeroCivico);
     END;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE stampa_dipartimenti
     IS
@@ -136,11 +136,11 @@ create or replace PACKAGE BODY PACK_SEN IS
         counter number:=0;
     BEGIN
         OPEN cursore;
-        DBMS_OUTPUT.PUT_LINE('Tabella DIPARTIMENTI'); 
-        LOOP 
+        DBMS_OUTPUT.PUT_LINE('Tabella DIPARTIMENTI');
+        LOOP
             counter := counter + 1;
             FETCH cursore INTO record;
-            EXIT WHEN cursore%NOTFOUND;        
+            EXIT WHEN cursore%NOTFOUND;
             DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter);
             DBMS_OUTPUT.PUT_LINE('  ID: '               || record.ID);
             DBMS_OUTPUT.PUT_LINE('  Numero emergenza: '  || record.NumeroEmergenza);
@@ -153,7 +153,7 @@ create or replace PACKAGE BODY PACK_SEN IS
             DBMS_OUTPUT.PUT_LINE('  Via: '              || record.Via);
             DBMS_OUTPUT.PUT_LINE('  Numero civico: '    || record.NumeroCivico );
             DBMS_OUTPUT.PUT_LINE('');
-            END LOOP; 
+            END LOOP;
         CLOSE cursore;
     END;
 ----------------------------------
@@ -165,40 +165,40 @@ create or replace PACKAGE BODY PACK_SEN IS
     BEGIN
         DELETE FROM DIPARTIMENTI WHERE (ID = InID);
     END;
-    
+
 ----------------------------------
-    
+
    PROCEDURE valori_iniziali_operatori
    IS
    BEGIN
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Pietro', 'Tornindietro',
                                     1, 'Pompiere');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Motorie');
-       
+
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Maria', 'Salvarezza',
                                     2, 'Infermiere');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Infermieristica');
-       
+
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Federica', 'Varlese',
                                     3, 'Poliziotto');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Diploma scuola secondaria di secondo grado');
-       
+
        -- Operatore con due titoli di studio
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Fabio', 'Cristalli',
                                     4, 'Carabiniere');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Perito Agrario');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Lettere');
-       
+
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Umberto', 'Pirozzi',
                                     5, 'Maresciallo di Finanza');
        INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Politiche');
-       
+
        INSERT INTO OPERATORI VALUES(idOpe_seq.NEXTVAL, 'Vittorio', 'Solombrino',
                                     6, 'Artificiere');
-       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Ingegneria meccanica');                                    
+       INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Ingegneria meccanica');
     END;
 
------------------------------------ 
+-----------------------------------
  /*
     PROCEDURE valori_iniziali_titoli
     IS
@@ -212,8 +212,8 @@ create or replace PACKAGE BODY PACK_SEN IS
         INSERT INTO TITOLIDISTUDI VALUES('Ingegneria Meccanica');
         INSERT INTO TITOLIDISTUDI VALUES('Ragioneria');
     END;
-   */ 
------------------------------------ 
+   */
+-----------------------------------
 
     PROCEDURE insert_operatore(
         InNome IN VARCHAR2,
@@ -235,12 +235,12 @@ create or replace PACKAGE BODY PACK_SEN IS
         InIDOpe IN NUMBER,
         InSpecTitolo IN VARCHAR2
     )
-    IS 
+    IS
     BEGIN
         INSERT INTO COMPETENZE VALUES(InIDOpe, InSpecTitolo);
     END;
 
------------------------------------   
+-----------------------------------
 
     PROCEDURE stampa_operatori
     IS
@@ -249,26 +249,26 @@ create or replace PACKAGE BODY PACK_SEN IS
         counter number:=0;
     BEGIN
         OPEN cursore;
-        DBMS_OUTPUT.PUT_LINE('Tabella OPERATORI'); 
-        LOOP 
+        DBMS_OUTPUT.PUT_LINE('Tabella OPERATORI');
+        LOOP
             counter := counter + 1;
             FETCH cursore INTO record;
-            EXIT WHEN cursore%NOTFOUND;        
+            EXIT WHEN cursore%NOTFOUND;
             DBMS_OUTPUT.PUT_LINE('Riga n# '  || counter);
             DBMS_OUTPUT.PUT_LINE('  ID: '               || record.ID);
             DBMS_OUTPUT.PUT_LINE('  Nome: '             || record.Nome);
             DBMS_OUTPUT.PUT_LINE('  Cognome: '          || record.Cognome);
             DBMS_OUTPUT.PUT_LINE('  ID dipartimento: '            || record.IDDip);
-            DBMS_OUTPUT.PUT_LINE('  Ruolo: '            || record.Ruolo);        
-            DBMS_OUTPUT.PUT_LINE('');             
-            END LOOP; 
+            DBMS_OUTPUT.PUT_LINE('  Ruolo: '            || record.Ruolo);
+            DBMS_OUTPUT.PUT_LINE('');
+            END LOOP;
         CLOSE cursore;
     END;
 
------------------------------------ 
+-----------------------------------
 
     PROCEDURE valori_iniziali
-    IS 
+    IS
     BEGIN
        valori_iniziali_utenti;
        valori_iniziali_dipartimenti;
@@ -277,55 +277,55 @@ create or replace PACKAGE BODY PACK_SEN IS
 
 -----------------------------------
 
-    PROCEDURE insert_richiesta_segnalazione(
-        InNumTelefonicoUtente IN RICHIESTE.NumTelefonicoUtente%TYPE,
-        InProvincia IN RICHIESTE.Provincia%TYPE,
-        InCittà IN RICHIESTE.Città%TYPE,
-        InCAP IN RICHIESTE.CAP%TYPE,
-        InVia IN RICHIESTE.Via%TYPE,
-        InNumeroCivico IN RICHIESTE.NumeroCivico%TYPE,
-        InData_Ora IN RICHIESTE.Data_Ora%TYPE,
+    PROCEDURE insert_segnalazione(
+        InNumTelefonicoUtente IN SEGNALAZIONI.NumTelefonicoUtente%TYPE,
+        InProvincia IN SEGNALAZIONI.Provincia%TYPE,
+        InCittà IN SEGNALAZIONI.Città%TYPE,
+        InCAP IN SEGNALAZIONI.CAP%TYPE,
+        InVia IN SEGNALAZIONI.Via%TYPE,
+        InNumeroCivico IN SEGNALAZIONI.NumeroCivico%TYPE,
+        InData_Ora IN SEGNALAZIONI.Data_Ora%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
     )
     IS
     BEGIN
-        INSERT INTO SEGNALAZIONI VALUES(codSeg_seq.NEXTVAL, InTipologiaEmergenza);
-        INSERT INTO RICHIESTE VALUES(InNumTelefonicoUtente, codSeg_seq.CURRVAL,
-                    InProvincia, InCittà, InCAP, InVia, InNumeroCivico, InData_Ora);
+        INSERT INTO SEGNALAZIONI VALUES(codSeg_seq.NEXTVAL, InTipologiaEmergenza,
+                                        InNumTelefonicoUtente, InProvincia,
+                                        InCittà, InCAP, InVia, InNumeroCivico,
+                                        InData_Ora);
     END;
 
 -----------------------------------
 
     PROCEDURE informazioni_segnalazione(
         InCodiceSegnalazione IN SEGNALAZIONI.Codice%TYPE,
-        OutProvincia OUT RICHIESTE.Provincia%TYPE,
-        OutCittà OUT RICHIESTE.Città%TYPE,
-        OutCAP OUT RICHIESTE.CAP%TYPE,
-        OutVia OUT RICHIESTE.Via%TYPE,
-        OutNumeroCivico OUT RICHIESTE.NumeroCivico%TYPE,
-        OutData_Ora OUT RICHIESTE.Data_Ora%TYPE,
-        OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE)
+        OutTipologiaEmergenza OUT SEGNALAZIONI.TipologiaEmergenza%TYPE,
+        OutProvincia OUT SEGNALAZIONI.Provincia%TYPE,
+        OutCittà OUT SEGNALAZIONI.Città%TYPE,
+        OutCAP OUT SEGNALAZIONI.CAP%TYPE,
+        OutVia OUT SEGNALAZIONI.Via%TYPE,
+        OutNumeroCivico OUT SEGNALAZIONI.NumeroCivico%TYPE,
+        OutData_Ora OUT SEGNALAZIONI.Data_Ora%TYPE
+    )
     IS
     BEGIN
-        SELECT R.Provincia, R.Città, R.CAP, R.Via, R.NumeroCivico, R.Data_Ora, S.TipologiaEmergenza
-        INTO OutProvincia, OutCittà, OutCAP, OutVia, OutNumeroCivico, OutData_Ora, OutTipologiaEmergenza
-        FROM RICHIESTE R
-        JOIN SEGNALAZIONI S
-        ON S.Codice = InCodiceSegnalazione AND S.Codice = R.CodSegnalazione;
+        SELECT S.TipologiaEmergenza, S.Provincia, S.Città, S.CAP, S.Via, S.NumeroCivico, S.Data_Ora
+        INTO OutTipologiaEmergenza, OutProvincia, OutCittà, OutCAP, OutVia, OutNumeroCivico, OutData_Ora
+        FROM SEGNALAZIONI S
+        WHERE S.Codice = InCodiceSegnalazione;
 
         -- stampa risultato del join
         DBMS_OUTPUT.PUT_LINE('INFORMAZIONI RELATIVE ALLA SEGNALAZIONE NUMERO ' || InCodiceSegnalazione || ':');
+        DBMS_OUTPUT.PUT_LINE('  Tipologia emergenza: ' || OutTipologiaEmergenza);
         DBMS_OUTPUT.PUT_LINE('  Provincia: ' || OutProvincia);
         DBMS_OUTPUT.PUT_LINE('  Città: ' || OutCittà);
         DBMS_OUTPUT.PUT_LINE('  CAP: ' || OutCAP);
         DBMS_OUTPUT.PUT_LINE('  Via: ' || OutVia);
         DBMS_OUTPUT.PUT_LINE('  Numero civico: ' || OutNumeroCivico);
         DBMS_OUTPUT.PUT_LINE('  Data e ora: ' || OutData_Ora);
-        DBMS_OUTPUT.PUT_LINE('  Tipologia emergenza: ' || OutTipologiaEmergenza);
     END;
-
-
-
+    
+    
 -----------------------------------
 
     PROCEDURE insert_coinvolgimento(
@@ -336,7 +336,7 @@ create or replace PACKAGE BODY PACK_SEN IS
     BEGIN
         INSERT INTO COINVOLGIMENTI VALUES (InIDDip, InCodSegnalazione);
     END;
-    
+
 -----------------------------------
-    
+
 END PACK_SEN;
