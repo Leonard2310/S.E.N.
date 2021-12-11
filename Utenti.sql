@@ -220,33 +220,32 @@ CREATE SEQUENCE idOpe_seq
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_table> modificato."
 ALTER TABLE OPERATORI
     ADD CONSTRAINT FK_OPE_SEG FOREIGN KEY (IDDip)
-    REFERENCES DIPARTIMENTI(ID);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Dipartimenti.
+    REFERENCES DIPARTIMENTI(ID)
+    ON DELETE CASCADE;
+    -- ON DELETE CASCADE: quando si cancella un Dipartimenti, si eliminano anche i suoi Operatori.
 
-ALTER TABLE RICHIESTE
-    ADD CONSTRAINT FK_RIC_UTE FOREIGN KEY (NumTelefonicoUtente)
+ALTER TABLE SEGNALAZIONI
+    ADD CONSTRAINT FK_SEG_UTE FOREIGN KEY (NumTelefonicoUtente)
     REFERENCES UTENTI(NumeroDiTelefono);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Utenti.
-
-ALTER TABLE RICHIESTE
-    ADD CONSTRAINT FK_RIC_SEG FOREIGN KEY (CodSegnalazione)
-    REFERENCES SEGNALAZIONI(Codice);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
+    -- Nessuna operazione ON DELETE.
 
 ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_DIP FOREIGN KEY (IDDip)
-    REFERENCES DIPARTIMENTI(ID);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Dipartimenti.
+    REFERENCES DIPARTIMENTI(ID)
+    ON DELETE CASCADE;
+    -- ON DELETE CASCADE: quando si cancella un Dipartimento, si eliminano anche i Coinvolgimenti relativi.
 
 ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_SEG FOREIGN KEY (CodSegnalazione)
-    REFERENCES SEGNALAZIONI(Codice);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
+    REFERENCES SEGNALAZIONI(Codice)
+    ON DELETE CASCADE;
+    -- ON DELETE CASCADE: quando si cancella una Segnalazione, si eliminano anche i Coinvolgimenti relativi.
 
 ALTER TABLE COMPETENZE
     ADD CONSTRAINT FK_COM_OPE FOREIGN KEY (IDOpe)
-    REFERENCES OPERATORI(ID);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Operatori.
+    REFERENCES OPERATORI(ID)
+    ON DELETE CASCADE;
+    -- ON DELETE CASCADE: cancello da Competenze ogni volta che si cancella un Operatore.
 
 ALTER TABLE COMPETENZE
     ADD CONSTRAINT FK_COM_TIT FOREIGN KEY (SpecTitolo)
