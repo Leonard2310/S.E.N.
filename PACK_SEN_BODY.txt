@@ -72,8 +72,24 @@ create or replace PACKAGE BODY PACK_SEN IS
         InNumeroDiTelefono IN NUMBER
     )
     IS
+        -- variabile per la verifica dell'esistenza dell'utente
+        utente_presente NUMBER := 0;
+        -- dichiarazione dell'eccezione
+        UTENTE_NON_ESISTENTE EXCEPTION;
     BEGIN
+        SELECT COUNT(*) INTO utente_presente FROM UTENTI U
+                        WHERE U.NumeroDiTelefono = InNumeroDiTelefono;
+        IF (utente_presente = 0)
+        THEN
+            RAISE UTENTE_NON_ESISTENTE;
+        END IF;
+        -- utente trovato correttamente
         DELETE FROM UTENTI WHERE (NumeroDiTelefono = InNumeroDiTelefono);
+    EXCEPTION
+        WHEN UTENTE_NON_ESISTENTE
+        THEN
+            DBMS_OUTPUT.PUT_LINE('Cancellamento rifiutato: utente non esistente.');
+            RAISE_APPLICATION_ERROR(-20600,'Errore cancellamento di un utente non esistente.');
     END;
 
 -----------------------------------
@@ -162,8 +178,24 @@ create or replace PACKAGE BODY PACK_SEN IS
         InID IN NUMBER
     )
     IS
+        -- variabile per la verifica dell'esistenza del dipartimento
+        dipartimento_presente NUMBER := 0;
+        -- dichiarazione dell'eccezione
+        DIPARTIMENTO_NON_ESISTENTE EXCEPTION;
     BEGIN
+        SELECT COUNT(*) INTO dipartimento_presente FROM DIPARTIMENTI D
+                        WHERE D.ID = InID;
+        IF (dipartimento_presente = 0)
+        THEN
+            RAISE DIPARTIMENTO_NON_ESISTENTE;
+        END IF;
+        -- dipartimento trovato correttamente
         DELETE FROM DIPARTIMENTI WHERE (ID = InID);
+    EXCEPTION
+        WHEN DIPARTIMENTO_NON_ESISTENTE
+        THEN
+            DBMS_OUTPUT.PUT_LINE('Cancellamento rifiutato: dipartimento non esistente.');
+            RAISE_APPLICATION_ERROR(-20601,'Errore cancellamento di un dipartimento non esistente.');
     END;
 
 ----------------------------------
@@ -279,13 +311,13 @@ create or replace PACKAGE BODY PACK_SEN IS
 
     PROCEDURE insert_segnalazione(
         InNumTelefonicoUtente IN SEGNALAZIONI.NumTelefonicoUtente%TYPE,
+        InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE,
         InProvincia IN SEGNALAZIONI.Provincia%TYPE,
         InCittà IN SEGNALAZIONI.Città%TYPE,
         InCAP IN SEGNALAZIONI.CAP%TYPE,
         InVia IN SEGNALAZIONI.Via%TYPE,
         InNumeroCivico IN SEGNALAZIONI.NumeroCivico%TYPE,
-        InData_Ora IN SEGNALAZIONI.Data_Ora%TYPE,
-        InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
+        InData_Ora IN SEGNALAZIONI.Data_Ora%TYPE
     )
     IS
     BEGIN

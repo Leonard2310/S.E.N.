@@ -92,13 +92,13 @@ IS
 
     PROCEDURE insert_segnalazione(
         InNumTelefonicoUtente IN SEGNALAZIONI.NumTelefonicoUtente%TYPE,
+        InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE,
         InProvincia IN SEGNALAZIONI.Provincia%TYPE,
         InCittà IN SEGNALAZIONI.Città%TYPE,
         InCAP IN SEGNALAZIONI.CAP%TYPE,
         InVia IN SEGNALAZIONI.Via%TYPE,
         InNumeroCivico IN SEGNALAZIONI.NumeroCivico%TYPE,
-        InData_Ora IN SEGNALAZIONI.Data_Ora%TYPE,
-        InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE
+        InData_Ora IN SEGNALAZIONI.Data_Ora%TYPE
     );
 
 -----------------------------------
