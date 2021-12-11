@@ -1,7 +1,5 @@
 -- Si è ora connessi come "sen".
 
--- Si procede innanzitutto con la creazione delle tabelle: File>Nuovo>Categorie: Livello database>Oggetti di database>Tabella.
-
 -- 1) Tabella utenti
 CREATE TABLE UTENTI(
     NumeroDiTelefono NUMBER(10),
@@ -15,7 +13,7 @@ CREATE TABLE UTENTI(
 
     CONSTRAINT PK_UTENTI PRIMARY KEY(NumeroDiTelefono)
 )
-STORAGE(INITIAL 1160k NEXT 580k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
+STORAGE(INITIAL 1490k NEXT 745k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
 
 -- Eseguendo ciascuna CREATE TABLE, nell'output screen appare "Creato table <nome_table>."
 
@@ -95,7 +93,7 @@ CREATE TABLE DIPARTIMENTI(
                                         'Polizia di Stato', 'Arma dei Carabinieri',
                                         'Guardia di Finanza', 'Esercito'))
 )
-STORAGE(INITIAL 11k NEXT 3k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
+STORAGE(INITIAL 15k NEXT 4k MINEXTENTS 1 MAXEXTENTS 5 PCTINCREASE 5);
 
 -- 4) Tabella operatori
 CREATE TABLE OPERATORI(
