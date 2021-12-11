@@ -249,8 +249,9 @@ ALTER TABLE COMPETENZE
 
 ALTER TABLE COMPETENZE
     ADD CONSTRAINT FK_COM_TIT FOREIGN KEY (SpecTitolo)
-    REFERENCES TITOLIDISTUDI(Specializzazione);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di TitoliDiStudi.
+    REFERENCES TITOLIDISTUDI(Specializzazione)
+    ON DELETE CASCADE;
+    -- ON DELETE CASCADE: cancello da Competenze ogni volta che si cancella un Titolo di Studi.
 
 
 --------------------------------------------------------------------------------
