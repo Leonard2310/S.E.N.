@@ -219,7 +219,7 @@ CREATE SEQUENCE idOpe_seq
  */
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_table> modificato."
 ALTER TABLE OPERATORI
-    ADD CONSTRAINT FK_OPE_SEG FOREIGN KEY (IDDip)
+    ADD CONSTRAINT FK_OPE_DIM FOREIGN KEY (IDDip)
     REFERENCES DIPARTIMENTI(ID)
     ON DELETE CASCADE;
     -- ON DELETE CASCADE: quando si cancella un Dipartimenti, si eliminano anche i suoi Operatori.
@@ -332,11 +332,13 @@ DROP ROLE centralinista;
 
 -- Eliminazione dei vincoli di integrità referenziale
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_tabella> modificato."
-ALTER TABLE OPERATORI      DROP CONSTRAINT FK_OPE_SEG;
+ALTER TABLE OPERATORI      DROP CONSTRAINT FK_OPE_DIM;
+ALTER TABLE SEGNALAZIONI   DROP CONSTRAINT FK_SEG_UTE;
 ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_DIP;
 ALTER TABLE COINVOLGIMENTI DROP CONSTRAINT FK_COI_SEG;
 ALTER TABLE COMPETENZE     DROP CONSTRAINT FK_COM_OPE;
 ALTER TABLE COMPETENZE     DROP CONSTRAINT FK_COM_TIT;
+
 
 -- Eliminazione delle tabelle
 -- Dopo ogni singola esecuzione, apparirà nell'output screen "Table <nome_tabella> eliminato."
