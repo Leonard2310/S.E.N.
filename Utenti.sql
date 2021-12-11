@@ -223,10 +223,15 @@ ALTER TABLE OPERATORI
     REFERENCES DIPARTIMENTI(ID);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Dipartimenti.
 
-ALTER TABLE SEGNALAZIONI
-    ADD CONSTRAINT FK_SEG_UTE FOREIGN KEY (NumTelefonicoUtente)
+ALTER TABLE RICHIESTE
+    ADD CONSTRAINT FK_RIC_UTE FOREIGN KEY (NumTelefonicoUtente)
     REFERENCES UTENTI(NumeroDiTelefono);
     -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Utenti.
+
+ALTER TABLE RICHIESTE
+    ADD CONSTRAINT FK_RIC_SEG FOREIGN KEY (CodSegnalazione)
+    REFERENCES SEGNALAZIONI(Codice);
+    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
 
 ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_DIP FOREIGN KEY (IDDip)
@@ -236,7 +241,7 @@ ALTER TABLE COINVOLGIMENTI
 ALTER TABLE COINVOLGIMENTI
     ADD CONSTRAINT FK_COI_SEG FOREIGN KEY (CodSegnalazione)
     REFERENCES SEGNALAZIONI(Codice);
-    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.   
+    -- Nessuna operazione ON DELETE: la FK si riferisce alla chiave primaria di Segnalazioni.
 
 ALTER TABLE COMPETENZE
     ADD CONSTRAINT FK_COM_OPE FOREIGN KEY (IDOpe)
