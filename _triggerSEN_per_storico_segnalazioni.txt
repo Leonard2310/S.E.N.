@@ -1,32 +1,32 @@
-CREATE OR REPLACE TRIGGER CONSERVA_SEGNALAZIONI
+create or replace TRIGGER CONSERVA_SEGNALAZIONI
     AFTER DELETE ON UTENTI
     FOR EACH ROW
-    DECLARE     
-        tCodice SEGNALAZIONI.Codice%TYPE; 
-        tTipologiaEmergenza SEGNALAZIONI.TipologiaEmergenza%TYPE; 
-    
-        tVia RICHIESTE.Via%TYPE;
-        tNumeroCivico RICHIESTE.NumeroCivico%TYPE;
-        tCittà RICHIESTE.Città%TYPE;
-        tProvincia RICHIESTE.Provincia%TYPE; 
-        tCAP RICHIESTE.CAP%TYPE; 
-        tData_Ora RICHIESTE.Data_Ora%TYPE;
-    
+    DECLARE
+        tCodice SEGNALAZIONI.Codice%TYPE;
+        tTipologiaEmergenza SEGNALAZIONI.TipologiaEmergenza%TYPE;
+
+        tVia SEGNALAZIONI.Via%TYPE;
+        tNumeroCivico SEGNALAZIONI.NumeroCivico%TYPE;
+        tCittà SEGNALAZIONI.Città%TYPE;
+        tProvincia SEGNALAZIONI.Provincia%TYPE;
+        tCAP SEGNALAZIONI.CAP%TYPE;
+        tData_Ora SEGNALAZIONI.Data_Ora%TYPE;
+
         cursor t_set IS SELECT 	S.Codice, S.TipologiaEmergenza,
-                                R.Via, R.NumeroCivico, R.Città, R.Provincia, R.CAP, R.Data_Ora
-        FROM    SEGNALAZIONI S, RICHIESTE R
-        WHERE 	R.NumTelefonicoUtente=:old.NumeroDiTelefono AND 	
-                S.Codice=R.CodSegnalazione; 
-    BEGIN 
-        OPEN t_set; 
-        LOOP 
+                                S.Via, S.NumeroCivico, S.Città,
+                                S.Provincia, S.CAP, S.Data_Ora
+        FROM    SEGNALAZIONI S
+        WHERE 	S.NumTelefonicoUtente=:old.NumeroDiTelefono;
+    BEGIN
+        OPEN t_set;
+        LOOP
             FETCH t_set INTO    tCodice, tTipologiaEmergenza,
                                 tVia, tNumeroCivico, tCittà, tProvincia, tCAP, tData_Ora;
             EXIT WHEN t_set%NOTFOUND;
             INSERT INTO STORICO_SEGNALAZIONI
-            VALUES( :OLD.NumeroDiTelefono, :OLD.Nome, :OLD.Cognome, tCodice, tTipologiaEmergenza, 
-                    tProvincia, tCittà, tCAP, tVia, tNumeroCivico, tData_Ora); 
-        END LOOP; 
-        CLOSE t_set; 
-        DELETE FROM RICHIESTE WHERE NumTelefonicoUtente=:old.NumeroDiTelefono;
+            VALUES( :OLD.NumeroDiTelefono, :OLD.Nome, :OLD.Cognome, tCodice, tTipologiaEmergenza,
+                    tProvincia, tCittà, tCAP, tVia, tNumeroCivico, tData_Ora);
+        END LOOP;
+        CLOSE t_set;
+        DELETE FROM SEGNALAZIONI WHERE NumTelefonicoUtente=:old.NumeroDiTelefono;
     END;
