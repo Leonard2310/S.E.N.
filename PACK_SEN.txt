@@ -57,10 +57,6 @@ IS
 
 -----------------------------------
 
-    --PROCEDURE valori_iniziali_titoli;
-
------------------------------------
-
     PROCEDURE valori_iniziali_operatori;
 
 -----------------------------------
@@ -75,6 +71,12 @@ IS
 
 -----------------------------------
 
+    PROCEDURE insert_titolo(
+        InSpecializzazione IN TITOLIDISTUDI.Specializzazione%TYPE
+    );
+
+-----------------------------------
+
     PROCEDURE insert_nuovo_titolo_operatore(
         InIDOpe IN NUMBER,
         InSpecTitolo IN VARCHAR2
@@ -83,6 +85,18 @@ IS
 -----------------------------------
 
     PROCEDURE stampa_operatori;
+    
+-----------------------------------
+
+    PROCEDURE delete_operatore(
+        InID IN OPERATORI.ID%TYPE
+    );
+    
+-----------------------------------
+
+    PROCEDURE delete_titolo(
+        InSpecializzazione IN TITOLIDISTUDI.Specializzazione%TYPE
+    );
 
 -----------------------------------
 

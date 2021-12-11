@@ -16,5 +16,5 @@ EXCEPTION
     WHEN DIPARTIMENTO_ESISTENTE
     THEN
         DBMS_OUTPUT.PUT_LINE('Inserimento rifiutato: dipartimento già esistente.');
-        RAISE_APPLICATION_ERROR(-20502,'Errore inserimento di un dipartimento già esistente.');
+        RAISE_APPLICATION_ERROR(-20501,'Errore inserimento di un dipartimento già esistente.');
 END;

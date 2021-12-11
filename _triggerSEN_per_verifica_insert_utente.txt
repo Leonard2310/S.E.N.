@@ -17,5 +17,5 @@ EXCEPTION
     WHEN UTENTE_ESISTENTE
     THEN
         DBMS_OUTPUT.PUT_LINE('Inserimento rifiutato: utente già esistente.');
-        RAISE_APPLICATION_ERROR(-20501,'Errore inserimento di un utente già esistente.');
+        RAISE_APPLICATION_ERROR(-20500,'Errore inserimento di un utente già esistente.');
 END;

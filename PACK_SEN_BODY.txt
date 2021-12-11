@@ -263,6 +263,16 @@ create or replace PACKAGE BODY PACK_SEN IS
 
 -----------------------------------
 
+    PROCEDURE insert_titolo(
+        InSpecializzazione IN TITOLIDISTUDI.Specializzazione%TYPE
+    )
+    IS
+    BEGIN
+        INSERT INTO TITOLIDISTUDI VALUES(InSpecializzazione);
+    END;
+     
+-----------------------------------   
+        
     PROCEDURE insert_nuovo_titolo_operatore(
         InIDOpe IN NUMBER,
         InSpecTitolo IN VARCHAR2
@@ -272,7 +282,7 @@ create or replace PACKAGE BODY PACK_SEN IS
         INSERT INTO COMPETENZE VALUES(InIDOpe, InSpecTitolo);
     END;
 
------------------------------------
+-----------------------------------    
 
     PROCEDURE stampa_operatori
     IS
@@ -296,8 +306,60 @@ create or replace PACKAGE BODY PACK_SEN IS
             END LOOP;
         CLOSE cursore;
     END;
+    
+-----------------------------------
+
+    PROCEDURE delete_operatore(
+        InID IN OPERATORI.ID%TYPE
+    )
+    IS
+        -- variabile per la verifica dell'esistenza dell'operatore
+        operatore_presente NUMBER := 0;
+        -- dichiarazione dell'eccezione
+        OPERATORE_NON_ESISTENTE EXCEPTION;
+    BEGIN
+        SELECT COUNT(*) INTO operatore_presente FROM OPERATORI O
+                        WHERE O.ID = InID;
+        IF (operatore_presente = 0)
+        THEN
+            RAISE OPERATORE_NON_ESISTENTE;
+        END IF;
+        -- operatore trovato correttamente
+        DELETE FROM OPERATORI WHERE (ID = InID);
+    EXCEPTION
+        WHEN OPERATORE_NON_ESISTENTE
+        THEN
+            DBMS_OUTPUT.PUT_LINE('Cancellamento rifiutato: operatore non esistente.');
+            RAISE_APPLICATION_ERROR(-20602,'Errore cancellamento di un operatore non esistente.');
+    END;
 
 -----------------------------------
+
+     PROCEDURE delete_titolo(
+        InSpecializzazione IN TITOLIDISTUDI.Specializzazione%TYPE
+    )
+    IS
+        -- variabile per la verifica dell'esistenza del titolo di studi
+        titolo_presente NUMBER := 0;
+        -- dichiarazione dell'eccezione
+        TITOLO_NON_ESISTENTE EXCEPTION;
+    BEGIN
+        SELECT COUNT(*) INTO titolo_presente FROM TITOLIDISTUDI T
+                        WHERE T.Specializzazione = InSpecializzazione;
+        IF (titolo_presente = 0)
+        THEN
+            RAISE TITOLO_NON_ESISTENTE;
+        END IF;
+        -- titolo di studi trovato correttamente
+        DELETE FROM TITOLIDISTUDI WHERE (Specializzazione = InSpecializzazione);
+    EXCEPTION
+        WHEN TITOLO_NON_ESISTENTE
+        THEN
+            DBMS_OUTPUT.PUT_LINE('Cancellamento rifiutato: titolo non esistente.');
+            RAISE_APPLICATION_ERROR(-20603,'Errore cancellamento di un titolo non esistente.');
+    END;
+
+----------------------------------
 
     PROCEDURE valori_iniziali
     IS

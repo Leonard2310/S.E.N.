@@ -16,5 +16,5 @@ EXCEPTION
     WHEN OPERATORE_ESISTENTE
     THEN
         DBMS_OUTPUT.PUT_LINE('Inserimento rifiutato: operatore già esistente.');
-        RAISE_APPLICATION_ERROR(-20500,'Errore inserimento di un operatore già esistente.');
+        RAISE_APPLICATION_ERROR(-20502,'Errore inserimento di un operatore già esistente.');
 END;
