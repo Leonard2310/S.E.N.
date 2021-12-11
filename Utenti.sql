@@ -258,6 +258,9 @@ ALTER TABLE COMPETENZE
 -- Dopo ogni singola esecuzione degli EXEC, apparirà nell'output screen "Procedura PL/SQL completata correttamente."
 SET SERVEROUT ON;
 
+----- INSERTIMENTI VALORI INIZIALI CON UN'UNICA FUNZIONE
+--EXEC PACK_SEN.valori_iniziali;
+
 ----- UTENTI
 EXEC PACK_SEN.valori_iniziali_utenti;
 EXEC PACK_SEN.stampa_utenti;
