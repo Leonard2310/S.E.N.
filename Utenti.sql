@@ -299,6 +299,10 @@ INSERT INTO COMPETENZE VALUES(idOpe_seq.CURRVAL, 'Scienze Politiche');
 EXEC PACK_SEN.stampa_operatori;
 EXEC PACK_SEN.stampa_dipartimenti;
 
+EXEC PACK_SEN.stampa_titoli;
+
+-- Inseriamo una segnalazione: furto a casa di Pippo Baudo
+EXEC PACK_SEN.insert_segnalazione(3230001111, 'Furto', 'NA', 'Napoli', 80137, 'Via Verdi', 13, CURRENT_TIMESTAMP);
 
 
 --------------------------------------------------------------------------------
@@ -352,4 +356,4 @@ DROP TABLE STORICO_SEGNALAZIONI;
 
 -- Eliminazione del package
 -- Dopo l'esecuzione, apparirà nell'output screen "Package PACK_SEN eliminato."
--- DROP PACKAGE PACK_SEN;
+--DROP PACKAGE PACK_SEN;
