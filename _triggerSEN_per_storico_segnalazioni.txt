@@ -24,7 +24,7 @@ create or replace TRIGGER CONSERVA_SEGNALAZIONI
                                 tVia, tNumeroCivico, tCittà, tProvincia, tCAP, tData_Ora;
             EXIT WHEN t_set%NOTFOUND;
             INSERT INTO STORICO_SEGNALAZIONI
-            VALUES( :OLD.NumeroDiTelefono, :OLD.Nome, :OLD.Cognome, tCodice, tTipologiaEmergenza,
+            VALUES( tCodice, :OLD.NumeroDiTelefono, :OLD.Nome, :OLD.Cognome, tTipologiaEmergenza,
                     tProvincia, tCittà, tCAP, tVia, tNumeroCivico, tData_Ora);
         END LOOP;
         CLOSE t_set;
