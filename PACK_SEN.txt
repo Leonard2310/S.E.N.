@@ -100,10 +100,6 @@ IS
 
 -----------------------------------
 
-    PROCEDURE valori_iniziali;
-
------------------------------------
-
     PROCEDURE insert_segnalazione(
         InNumTelefonicoUtente IN SEGNALAZIONI.NumTelefonicoUtente%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE,

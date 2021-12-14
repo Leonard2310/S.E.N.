@@ -346,16 +346,6 @@ create or replace PACKAGE BODY PACK_SEN IS
 
 ----------------------------------
 
-    PROCEDURE valori_iniziali
-    IS
-    BEGIN
-       valori_iniziali_utenti;
-       valori_iniziali_dipartimenti;
-       valori_iniziali_operatori;
-    END;
-
------------------------------------
-
     PROCEDURE insert_segnalazione(
         InNumTelefonicoUtente IN SEGNALAZIONI.NumTelefonicoUtente%TYPE,
         InTipologiaEmergenza IN SEGNALAZIONI.TipologiaEmergenza%TYPE,
