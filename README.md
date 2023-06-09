@@ -1,4 +1,4 @@
-![Uploading Screenshot 2023-06-09 alle 21.33.53.png…]()
+<img width="803" alt="Screenshot 2023-06-09 alle 21 33 53" src="https://github.com/Leonard2310/SEN/assets/71086591/b99de6b7-91a1-429b-9094-dcee8c53685c">
 
 This repository contains the project files for the development of a database system to manage the S.E.N. (Servizio di Emergenza Nazionale). The S.E.N. is composed of three main departments: Firefighters, Emergency Medical Services, and Law Enforcement, which in turn include the State Police, Carabinieri, Financial Guard, and Army. The objective is to enable cooperation among these departments to efficiently and quickly resolve emergencies.
 
