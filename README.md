@@ -1,5 +1,6 @@
-# S.E.N. 
-This repository contains the project files for the development of a database system to manage the S.E.N. (National Emergency Service). The S.E.N. is composed of three main departments: Firefighters, Emergency Medical Services, and Law Enforcement, which in turn include the State Police, Carabinieri, Financial Guard, and Army. The objective is to enable cooperation among these departments to efficiently and quickly resolve emergencies.
+![Uploading Screenshot 2023-06-09 alle 21.33.53.png…]()
+
+This repository contains the project files for the development of a database system to manage the S.E.N. (Servizio di Emergenza Nazionale). The S.E.N. is composed of three main departments: Firefighters, Emergency Medical Services, and Law Enforcement, which in turn include the State Police, Carabinieri, Financial Guard, and Army. The objective is to enable cooperation among these departments to efficiently and quickly resolve emergencies.
 
 ## Introduction
 The S.E.N. application successfully enables the coordination and efficient management of the emergency service departments. It fosters cooperation between Firefighters, Emergency Medical Services, and Law Enforcement (State Police, Carabinieri, Financial Guard, and Army) to swiftly and effectively address urgent situations. A relationship between a User and an Incident is established through a Request, which contains all the necessary details of the urgency. The respective department is then informed about the emergency through Involvement and prepares to resolve it.
