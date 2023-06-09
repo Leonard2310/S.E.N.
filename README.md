@@ -197,4 +197,20 @@ This trigger automates certain actions when an existing operator record is delet
 #### triggerSEN for Historical Incidents
 This trigger handles the archiving of historical incident records to maintain data integrity and optimize performance.
 
-This Readme provides an overview of the S.E.N. Emergency Service Database project, including its objectives, design, and implementation details. For more information, refer to the relevant sections and files in the repository.
+## Requirements
+- ORACLE SQL Developer (version 19.4.0 or higher)
+- Draw.io
+
+## Results
+The S.E.N. application successfully enables the coordination and efficient management of the emergency service departments, including Firefighters, Emergency Medical Services, and Law Enforcement (which includes State Police, Carabinieri, Guardia di Finanza, and Army). The objective is to foster cooperation between departments to swiftly and effectively address urgent situations.
+
+Following the occurrence of an emergency, a relationship between a User and an Incident is established through a Request, which contains all the necessary details of the urgency. At this point, through Involvement, the respective department is informed about the emergency and prepares to resolve it.
+
+## Contributions
+- [Leonardo Catello](https://github.com/Leonard2310) 
+- [Daiana Cipollaro](https://github.com/Dad-cip)
+- [Francesco Di Serio](https://github.com/fdiserio)
+- [Ciro Gallucci](https://github.com/CiroGallucci)
+
+## License
+This project is licensed under the [GNU General Public License v3.0]. Refer to the LICENSE file for more information.
