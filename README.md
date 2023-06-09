@@ -1,201 +1,19 @@
 # S.E.N. 
 This repository contains the project files for the development of a database system to manage the S.E.N. (National Emergency Service). The S.E.N. is composed of three main departments: Firefighters, Emergency Medical Services, and Law Enforcement, which in turn include the State Police, Carabinieri, Financial Guard, and Army. The objective is to enable cooperation among these departments to efficiently and quickly resolve emergencies.
 
-## Table of Contents
-
-1. [Introduction](#introduction)
-    - 1.1 Data Specifications
-    - 1.2 Operation Specifications
-    - 1.3 Technological and Security Constraints
-2. [Database Design](#database-design)
-    - 2.1 Analysis of Requirements and Restructuring
-        - 2.1.1 General Information
-        - 2.1.2 User Information
-        - 2.1.3 Department Information
-        - 2.1.4 Incident Information
-        - 2.1.5 Operator Information
-    - 2.2 Conceptual Design
-        - 2.2.1 Main Entity-Relationship (ER) Schema
-        - 2.2.2 Refined Schema: Simplified ER
-        - 2.2.3 Refined Schema: Advanced ER
-    - 2.3 Logical Design
-        - 2.3.1 Restructuring Phase
-        - 2.3.2 Translation Phase
-        - 2.3.3 Logical Schema
-    - 2.4 Physical Design
-        - 2.4.1 Physical Database Dimensioning
-        - 2.4.2 Connection Creation
-        - 2.4.3 User/Role Creation and Privilege Assignment
-        - 2.4.4 Database Object Creation and Constraint Definition
-        - 2.4.5 Database Population
-3. [Overview of Application Design](#application-design-overview)
-    - 3.1 Data Layer
-4. [Implementation](#implementation)
-    - 4.1 Exception Management
-    - 4.2 system.sql
-    - 4.3 sen.sql
-    - 4.4 PACKSEN Package
-        - 4.4.1 Specification
-        - 4.4.2 Body
-    - 4.5 Triggers
-        - 4.5.1 triggerSEN for User Insert Validation
-        - 4.5.2 triggerSEN for Title Insert Validation
-        - 4.5.3 triggerSEN for Operator Insert Validation
-        - 4.5.4 triggerSEN for Department Insert Validation
-        - 4.5.5 triggerSEN for Date Validation
-        - 4.5.6 triggerSEN for Study Title Validation
-        - 4.5.7 triggerSEN for Operator Insert
-        - 4.5.8 triggerSEN for Involvement Insert
-        - 4.5.9 triggerSEN for Operator Update
-        - 4.5.10 triggerSEN for Operator Delete
-        - 4.5.11 triggerSEN for Historical Incidents
-
 ## Introduction
-The S.E.N. Emergency Service Database is designed to manage a national emergency service that consists of three main departments: Firefighters, Emergency Medical Services, and Law Enforcement. The Law Enforcement department further includes the State Police, Carabinieri, Financial Guard, and Army. The primary objective is to facilitate cooperation among these departments to efficiently and rapidly resolve emergencies.
+The S.E.N. application successfully enables the coordination and efficient management of the emergency service departments. It fosters cooperation between Firefighters, Emergency Medical Services, and Law Enforcement (State Police, Carabinieri, Financial Guard, and Army) to swiftly and effectively address urgent situations. A relationship between a User and an Incident is established through a Request, which contains all the necessary details of the urgency. The respective department is then informed about the emergency through Involvement and prepares to resolve it.
 
-### Data Specifications
-The database encompasses the following entities:
-- General Information
-- User Information
-- Department Information
-- Incident Information
-- Operator Information
+### Project Description
+The S.E.N. Emergency Service Database is designed to facilitate the coordination and management of the emergency service departments. It includes entities such as General Information, User Information, Department Information, Incident Information, and Operator Information. The operations of the database involve inserting, updating, and deleting user records, managing department information, recording incident details, and tracking operator data.
 
-### Operation Specifications
-The operations of the S.E.N. Emergency Service Database include:
-- Inserting, updating, and deleting user records
-- Managing department information
-- Recording incident details
-- Tracking operator data
+The design of the database system adheres to technological and security constraints to ensure a robust and secure system. It goes through various design phases, including analysis of requirements, conceptual and logical design, and physical implementation.
 
-### Technological and Security Constraints
-The design of the database system adheres to technological and security constraints to ensure a robust and secure system.
+The analysis phase involves restructuring the requirements into appropriate entities, such as General Information, User Information, Department Information, Incident Information, and Operator Information. The conceptual design phase includes creating an Entity-Relationship (ER) schema to represent the relationships between entities. The logical design phase focuses on restructuring the conceptual schema into a logical schema to ensure data integrity and normalization. Finally, the physical design phase involves implementing the logical schema into the chosen database management system.
 
-## Database Design
-This section covers the design aspects of the database, including the analysis of requirements, conceptual and logical design, and physical implementation.
+The application layer interacts with the database through the data layer, which handles queries, data fetching, and record updates. The implementation phase includes exception management techniques to handle errors and exceptional situations. The system.sql and sen.sql files contain the necessary SQL statements for setting up and creating the S.E.N. Emergency Service Database. Additionally, the PACKSEN package provides procedures and functions to manage various aspects of the emergency service system.
 
-### Analysis of Requirements and Restructuring
-The initial phase involves analyzing the specifications and restructuring the requirements into appropriate entities.
-
-#### General Information
-This section captures general information related to the emergency service, including system-wide data.
-
-#### User Information
-User information includes details of individuals who interact with the S.E.N. Emergency Service, such as their personal information and contact details.
-
-#### Department Information
-Department information encompasses data related to the different departments within the emergency service, including their roles, responsibilities, and contact details.
-
-#### Incident Information
-Incident information consists of all the details related to a specific emergency, including the type of emergency, location, severity, and relevant timestamps.
-
-#### Operator Information
-Operator information includes data about the individuals working within the emergency service departments. It includes their personal information, roles, and contact details.
-
-### Conceptual Design
-The conceptual design involves creating an Entity-Relationship (ER) schema to represent the relationships and dependencies between entities.
-
-#### Main Entity-Relationship (ER) Schema
-The main ER schema represents the core entities and relationships of the S.E.N. Emergency Service Database.
-
-#### Refined Schema: Simplified ER
-The refined schema simplifies the main ER schema to enhance clarity and improve understanding.
-
-#### Refined Schema: Advanced ER
-The advanced refined schema further refines the ER model, incorporating additional details and relationships for a comprehensive representation.
-
-### Logical Design
-The logical design phase focuses on restructuring the conceptual schema into a logical schema, ensuring data integrity and normalization.
-
-#### Restructuring Phase
-During the restructuring phase, the logical design is refined by eliminating redundancies and improving the structure of the schema.
-
-#### Translation Phase
-The translation phase involves converting the refined logical schema into a logical schema that can be implemented in the chosen database management system.
-
-#### Logical Schema
-The logical schema represents the final design of the database, including tables, attributes, and relationships.
-
-### Physical Desig
-The physical design phase focuses on implementing the logical schema into the chosen database management system.
-
-#### Physical Database Dimensioning
-The physical database dimensioning involves determining the appropriate sizing and capacity requirements for the database.
-
-#### Connection Creation
-The connection creation phase establishes the necessary connections between the database and the application.
-
-#### User/Role Creation and Privilege Assignment
-Users and roles are created in the database, and appropriate privileges are assigned to ensure secure access and data management.
-
-#### Database Object Creation and Constraint Definition
-The necessary objects, such as tables, views, indexes, and constraints, are created in the database to facilitate data storage and retrieval.
-
-#### Database Population
-The database is populated with initial data to enable the functioning of the S.E.N. Emergency Service Database.
-
-## Application Design Overview
-This section provides an overview of the design considerations for the application layer that interacts with the database.
-
-### Data Layer
-The data layer handles the interaction with the database, including executing queries, fetching data, and updating records.
-
-## Implementation
-The implementation phase involves executing the design by creating the necessary database objects, implementing exception management, and defining triggers.
-
-### Exception Management
-Exception management techniques are implemented to handle errors and exceptional situations that may arise during database operations.
-
-### system.sql
-The system.sql file contains the SQL statements required for setting up the system and configuring the database.
-
-### sen.sql
-The sen.sql file contains the SQL statements required for creating the S.E.N. Emergency Service Database.
-
-### PACK SEN Package
-The PACKSEN package provides a set of procedures and functions to manage various aspects of the emergency service system.
-
-#### Specification
-The specification file defines the interface and functionality of the PACKSEN package.
-
-#### Body
-The body file contains the implementation of the procedures and functions defined in the package specification.
-
-### Triggers
-Triggers are implemented to enforce data integrity and automate certain actions based on specified events.
-
-#### triggerSEN for User Insert Validation
-This trigger validates the insertion of user records to ensure data consistency and adherence to defined rules.
-
-#### triggerSEN for Title Insert Validation
-This trigger validates the insertion of title records to ensure data consistency and adherence to defined rules.
-
-#### triggerSEN for Operator Insert Validation
-This trigger validates the insertion of operator records to ensure data consistency and adherence to defined rules.
-
-#### triggerSEN for Department Insert Validation
-This trigger validates the insertion of department records to ensure data consistency and adherence to defined rules.
-
-#### triggerSEN for Date Validation
-This trigger validates the dates in incident records to ensure data consistency and adherence to defined rules.
-
-#### triggerSEN for Study Title Validation
-This trigger validates the study titles in operator records to ensure data consistency and adherence to defined rules.
-
-#### triggerSEN for Operator Insert
-This trigger automates certain actions when a new operator record is inserted into the database.
-
-#### triggerSEN for Involvement Insert
-This trigger automates certain actions when a new involvement record is inserted into the database.
-
-#### triggerSEN for Operator Update
-This trigger automates certain actions when an existing operator record is updated in the database.
-
-#### triggerSEN for Operator Delete
-This trigger automates certain actions when an existing operator record is deleted from the database.
-
-#### triggerSEN for Historical Incidents
-This trigger handles the archiving of historical incident records to maintain data integrity and optimize performance.
+Triggers are implemented in the database to enforce data integrity and automate certain actions based on specified events. These triggers include user insert validation, title insert validation, operator insert validation, department insert validation, date validation, study title validation, operator insert, involvement insert, operator update, operator delete, and historical incidents.
 
 ## Requirements
 - ORACLE SQL Developer (version 19.4.0 or higher)
@@ -207,6 +25,9 @@ The S.E.N. application successfully enables the coordination and efficient manag
 Following the occurrence of an emergency, a relationship between a User and an Incident is established through a Request, which contains all the necessary details of the urgency. At this point, through Involvement, the respective department is informed about the emergency and prepares to resolve it.
 
 ## Contributions
+We welcome contributions and improvements to the KinDeNet project. If you would like to contribute, please submit a pull request. Make sure to discuss and plan proposed changes with the development team before starting the work.
+
+## Authors
 - [Leonardo Catello](https://github.com/Leonard2310) 
 - [Daiana Cipollaro](https://github.com/Dad-cip)
 - [Francesco Di Serio](https://github.com/fdiserio)
